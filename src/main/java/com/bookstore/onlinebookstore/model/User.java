@@ -4,16 +4,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.bookstore.onlinebookstore.model.enums.RoleType;
+
 @Entity
 @Table(name = "users")
 public class User {
 	@Id
-	@Column(name = "user_id", nullable = false, updatable = false)
+	@Column(name = "user_id", nullable = false, updatable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, updatable = false, length = 50)
@@ -26,6 +30,23 @@ public class User {
 	private String password;
 	@Column(nullable = false, updatable = false)
 	private Date dateCreated;
+	@Column(nullable = false, updatable = false)
+	@Enumerated(EnumType.STRING)
+	private RoleType userRole;
+
+	public User() {
+	}
+
+	public User(Long id, String firstName, String lastName, String email, String password, Date dateCreated,
+			RoleType userRole) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.dateCreated = dateCreated;
+		this.userRole = userRole;
+	}
 
 	public Long getId() {
 		return id;

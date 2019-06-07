@@ -9,20 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.bookstore.onlinebookstore.model.enums.RoleType;
+
 @Entity
 @Table(name = "roles")
 public class Role {
 	@Id
-	@Column(name = "role_id", nullable = false, updatable = false)
+	@Column(name = "role_id", nullable = false, updatable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(nullable = false, updatable = false, unique = true)
 	@Enumerated(EnumType.STRING)
-	private Role roleName;
+	private RoleType roleName;
 
 	public Role() {
 	}
 
-	public Role(Integer id, Role roleName) {
+	public Role(Integer id, RoleType roleName) {
 		this.id = id;
 		this.roleName = roleName;
 	}
@@ -35,11 +38,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public Role getRoleName() {
+	public RoleType getRoleName() {
 		return roleName;
 	}
 
-	public void setRoleName(Role roleName) {
+	public void setRoleName(RoleType roleName) {
 		this.roleName = roleName;
 	}
 
