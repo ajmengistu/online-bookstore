@@ -10,6 +10,8 @@
 <body>
 <div class="container">
 	<h1>Home page!</h1>
+	<a href="/login">Login</a>
+	<a href="/register">Register</a>
 	</div>
 </body>
 </html>
