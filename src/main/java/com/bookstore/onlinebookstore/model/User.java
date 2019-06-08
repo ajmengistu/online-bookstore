@@ -96,9 +96,17 @@ public class User {
 		this.dateCreated = dateCreated;
 	}
 
+	public RoleType getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(RoleType userRole) {
+		this.userRole = userRole;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + "]";
+				+ ", password=" + password + ", dateCreated=" + dateCreated + ", userRole=" + userRole + "]";
 	}
 }
