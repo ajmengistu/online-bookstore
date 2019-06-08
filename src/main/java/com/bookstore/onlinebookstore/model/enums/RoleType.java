@@ -1,7 +1,7 @@
 package com.bookstore.onlinebookstore.model.enums;
 
 public enum RoleType {
-	ROLE_USER("ROLE_USER"), ROLE_ADMIN("ROLE_ADMIN");
+	ROLE_CUSTOMER("ROLE_CUSTOMER"), ROLE_ADMIN("ROLE_ADMIN");
 
 	private String value;
 
