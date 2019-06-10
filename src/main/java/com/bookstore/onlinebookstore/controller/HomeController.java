@@ -27,8 +27,9 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String userHomePage(Model model, ModelMap modelMap) {
-//		modelMap.put("method", "POST");
-//		modelMap.put("login", "/login");
+		modelMap.put("userLogin", "/login");
+		modelMap.put("userRegister", "/register");
+		modelMap.put("home", "/");
 		return "home";
 	}
 

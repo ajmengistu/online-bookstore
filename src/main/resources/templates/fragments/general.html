@@ -13,7 +13,7 @@
 	<th:block th:fragment="navbar">
 
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#"
+			<a class="navbar-brand" th:href="@{${home}}"
 				style="color: aquamarine; padding: 10px;"><b>Online</b>Bookstore</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -45,13 +45,15 @@
 					</a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#"> <span class="text-warning"></span>
+							<a class="dropdown-item" th:href="@{${userLogin}}"> <span
+								class="text-warning"></span>
 								<button type="button"
 									class="btn btn-warning
                                     btn-md btn-block"
 									style="margin-bottom: 20px;">Sign in</button>
-							</a> <a class="dropdown-item" href="#">New customer? <span
-								style="text-decoration: underline;">Register here</span>
+							</a> <a class="dropdown-item" th:href="@{${userRegister}}">New
+								customer? <span style="text-decoration: underline;">Register
+									here</span>
 							</a>
 
 						</div></li>
