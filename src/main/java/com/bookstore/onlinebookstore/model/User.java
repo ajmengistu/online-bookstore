@@ -37,9 +37,8 @@ public class User {
 	public User() {
 	}
 
-	public User(Long id, String firstName, String lastName, String email, String password, Date dateCreated,
+	public User(String firstName, String lastName, String email, String password, Date dateCreated,
 			RoleType userRole) {
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

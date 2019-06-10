@@ -1,17 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Register - OnlineBookStore</title>
+<title>Register | OnlineBookstore</title>
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
+	<div class="container">
+		<h1>Register page!!!</h1>
+	</div>
 	<div class="container col-lg-3">
-		<form class="needs-validation border border-dark-1" method="POST" action="${register-user}"
-			style="margin-top: 15%;" novalidate>
+		<form class="needs-validation border border-dark-1" method="POST"
+			th:action="@{${reg}}" style="margin-top: 15%;" novalidate>
 			<!-- <img src="./onlinebookstore-logo.png" alt="" width="20%;"
 				class="mt-4"
 				style="display: block; margin-left: auto; margin-right: auto;"> -->
@@ -19,8 +20,8 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="text"
-						class="form-control" name="firstName" id="validationCustom01"
-						placeholder="First name" required>
+						class="form-control" name="firstName" placeholder="First name"
+						required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid first
 						name!</div>
@@ -29,8 +30,8 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="text"
-						class="form-control" name="lastName" id="validationCustom01"
-						placeholder="Last name" required>
+						class="form-control" name="lastName" placeholder="Last name"
+						required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid last name!
 					</div>
@@ -39,8 +40,7 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="email"
-						class="form-control" name="email" id="validationCustom01"
-						placeholder="Email" required>
+						class="form-control" name="email" placeholder="Email" required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid email!</div>
 				</div>
@@ -85,7 +85,9 @@
 					type="submit">Sign up</button>
 			</div>
 		</form>
-
+		<form action="/" method="GET">
+			<button type="submit">home</button>
+		</form>
 		<script>
 			// Example starter JavaScript for disabling form submissions if there are invalid fields
 			(function() {
@@ -124,4 +126,5 @@
 		</script>
 	</div>
 </body>
+
 </html>
