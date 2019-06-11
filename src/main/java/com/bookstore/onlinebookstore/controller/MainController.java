@@ -19,7 +19,7 @@ import com.bookstore.onlinebookstore.model.enums.RoleType;
 import com.bookstore.onlinebookstore.repository.UserRepository;
 
 @Controller
-public class HomeController {
+public class MainController {
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
@@ -30,6 +30,7 @@ public class HomeController {
 		modelMap.put("userLogin", "/login");
 		modelMap.put("userRegister", "/register");
 		modelMap.put("home", "/");
+//		modelMap.put("topRatedBooksList", bookService.getTopRatedBooks);
 		return "home";
 	}
 

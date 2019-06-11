@@ -22,13 +22,13 @@ public class Book {
 	private String authors;
 	@Column(nullable = true, updatable = true)
 	private Integer pubYear;
-	@Column(nullable = true, updatable = true, length = 255)
+	@Column(nullable = false, updatable = true, length = 255)
 	private String title;
-	@Column(nullable = false, updatable = true)
+	@Column(nullable = true, updatable = true)
 	private Double averageRating;
 	@Column(nullable = true, updatable = true)
 	private Integer ratings;
-	@Column(nullable = true, updatable = true)
+	@Column(nullable = false, updatable = true)
 	private BigDecimal price;
 	@Column(nullable = false, updatable = true, length = 255)
 	private String image;
