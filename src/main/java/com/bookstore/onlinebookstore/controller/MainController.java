@@ -1,7 +1,9 @@
 package com.bookstore.onlinebookstore.controller;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,11 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.model.enums.RoleType;
+import com.bookstore.onlinebookstore.repository.BookRepository;
 import com.bookstore.onlinebookstore.repository.UserRepository;
+import com.bookstore.onlinebookstore.service.BookService;
 
 @Controller
 public class MainController {
@@ -24,13 +30,25 @@ public class MainController {
 	private UserRepository userRepo;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BookService bookService;
+
+	@Autowired
+	private BookRepository bookRepository;
+
+	@RequestMapping("/top")
+	public @ResponseBody List<Book> getAll() {
+		List<Book> list = bookRepository.findTop25ByOrderByRatingsDesc();
+		Collections.shuffle(list);
+		return list;
+	}
 
 	@RequestMapping("/")
 	public String userHomePage(Model model, ModelMap modelMap) {
 		modelMap.put("userLogin", "/login");
 		modelMap.put("userRegister", "/register");
 		modelMap.put("home", "/");
-//		modelMap.put("topRatedBooksList", bookService.getTopRatedBooks);
+		modelMap.put("topPopularBooksList", bookService.getPopularBooks());
 		return "home";
 	}
 
