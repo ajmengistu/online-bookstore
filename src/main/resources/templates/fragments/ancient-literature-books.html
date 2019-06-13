@@ -2,14 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Insert title here</title>
+<meta charset="ISO-8859-1">
+<title></title>
 </head>
 <body>
-	<div class="container" th:fragment="top-rated-books-by-year">
-		<h4 class="mt-4 mb-4">Top Rated Books By Year</h4>
+	<div class="container" th:fragment="ancient-literature-books">
+		<h4 class="mt-4 mb-4">Ancient Literature Books</h4>
 		<div class="row">
 			<div class="owl-carousel owl-theme">
-				<div th:each="book : ${topRatedBooksByYearList}">
+				<div th:each="book : ${ancientLitBooksList}">
 					<div class="item">
 						<div class="card" style="border: none;">
 							<img alt="" th:src="${book.image}"
@@ -20,7 +21,7 @@
 									by <span th:text="${book.authors}"></span>
 								</p>
 								<p>
-									<span th:text="${book.pubYear}"></span>
+									 <span th:text="${book.pubYear}"></span>
 								</p>
 								<h5 style="color: red;">
 									$<span class="text-center" th:text="${book.price}"></span>
@@ -70,6 +71,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 </body>
 </html>
