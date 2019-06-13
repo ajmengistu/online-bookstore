@@ -5,6 +5,14 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1,
             shrink-to-fit=no">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css"
+	rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
 
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
@@ -13,6 +21,7 @@
 	href="/css/owl.theme.default.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 	<th:block th:fragment="navbar">
@@ -74,12 +83,70 @@
 			</div>
 		</nav>
 	</th:block>
-	<th:block th:fragment="js-bootstrap-scripts">
-<!-- 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-			crossorigin="anonymous"></script> -->
+	<th:block th:fragment="scripts">
+		<script>
+			$(".autocomplete").autocomplete({
+				source : function(request, response) {
+					console.log(request.term);
+					$.ajax({
+						dataType : "json",
+						type : 'GET',
+						url : "/top",
+						data : {
+							q : request.term
+						},
+						success : function(data) {
+							console.log(data[0]);
+							response($.map(data, function(value, key) {
+								console.log(value.id);
+
+								return {
+									value : value.title,
+									avatar : value.image,
+									label : value.title,
+									title : value.title,
+									author : value.authors
+
+								};
+							}));
+						}
+					});
+				},
+				minLength : 1
+			}).data("ui-autocomplete")._renderItem = function(ul, item) {
+				console.log(item)
+				var inner_html = '<a href="/book/bk?id='
+						+ item.bookId
+						+ '&title='
+						+ item.title
+						+ '"><div class="list_item_container"><span class="image"><img style="width: 70px; text-align: left" src="' + item.avatar + '"></span><span style="font-size: 18px;" class="description">  '
+						+ item.label + " <sub> by " + item.author
+						+ '</sub></span></div></a><hr/>';
+				return $("<li></li>").data("ui-autocomplete-item", item)
+						.append(inner_html).appendTo(ul)
+			};
+		</script>
+
 		<script type="text/javascript"
 			src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="/css/owl.carousel.min.js"></script>
+		<script>
+			var owl = $('.owl-carousel');
+			owl.owlCarousel({
+				items : 4,
+				loop : true,
+				margin : 10,
+				autoplay : true,
+				autoplayTimeout : 2000,
+				autoplayHoverPause : true
+			});
+			$('.play').on('click', function() {
+				owl.trigger('play.owl.autoplay', [ 2000 ])
+			})
+			$('.stop').on('click', function() {
+				owl.trigger('stop.owl.autoplay')
+			})
+		</script>
 	</th:block>
 </body>
 </html>

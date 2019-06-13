@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.model.enums.RoleType;
-import com.bookstore.onlinebookstore.repository.BookRepository;
 import com.bookstore.onlinebookstore.repository.UserRepository;
 import com.bookstore.onlinebookstore.service.BookService;
 
@@ -33,14 +32,14 @@ public class MainController {
 	@Autowired
 	private BookService bookService;
 
-	@Autowired
-	private BookRepository bookRepository;
+//	@Autowired
+//	private BookRepository bookRepository;
 
 	@RequestMapping("/top")
-	public @ResponseBody List<Book> getAll(@RequestParam String q) {
-		System.out.println(q);
-//		return bookRepository.findByTitleContaining(q);
-		return bookRepository.findByTitleContainingOrAuthorsContaining(q, q);
+//	public @ResponseBody List<Book> getAll(@RequestParam String q) {
+	public @ResponseBody List<Book> getAll() {
+//		return bookService.getSearchResults(q);
+		return bookService.getTopRatedBooksByYear();
 	}
 
 	@RequestMapping("/test")
@@ -50,9 +49,11 @@ public class MainController {
 
 	@RequestMapping("/")
 	public String userHomePage(Model model, ModelMap modelMap) {
+		// Links
 		modelMap.put("userLogin", "/login");
 		modelMap.put("userRegister", "/register");
 		modelMap.put("home", "/");
+		// List of Books
 		modelMap.put("topPopularBooksList", bookService.getPopularBooks());
 		return "home";
 	}

@@ -3,6 +3,7 @@ package com.bookstore.onlinebookstore.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.bookstore.onlinebookstore.model.Book;
@@ -16,4 +17,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	public List<Book> findByTitleContainingOrAuthorsContaining(String title, String authors);
 
 	public List<Book> findTop25ByOrderByAverageRatingDesc();
+
+	@Query(value = "SELECT * from books group by pub_year having max(average_rating) order by pub_year desc limit 25", nativeQuery = true)
+	public List<Book> findTop25RatedBooksByYearDesc();
 }

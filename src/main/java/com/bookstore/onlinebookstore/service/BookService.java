@@ -14,15 +14,32 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepository;
 
-	// list of top rated books
+	public List<Book> getTopRatedBooks() {
+		List<Book> list = bookRepository.findTop25ByOrderByAverageRatingDesc(); // list of top rated books random order
+		Collections.shuffle(list);
+		return list;
+	}
 
-	// list of top rated books by year
+	public List<Book> getTopRatedBooksByYear() {
+		return bookRepository.findTop25RatedBooksByYearDesc(); // list of top rated books by year
+	}
 
 	// list of ancient literature books
+//	public List<Book> getAncientLiteratureBooks(){
+
+//	}
 
 	public List<Book> getPopularBooks() {
 		List<Book> list = bookRepository.findTop25ByOrderByRatingsDesc();
 		Collections.shuffle(list);
 		return list; // list of top 25 popular books in random order
+	}
+
+	public List<Book> getSearchResults(String query) {
+		List<Book> list = bookRepository.findByTitleContainingOrAuthorsContaining(query, query);
+		if (list.size() > 4)
+			return list.subList(0, 4);
+		else
+			return list;
 	}
 }
