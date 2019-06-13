@@ -20,4 +20,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	@Query(value = "SELECT * from books group by pub_year having max(average_rating) order by pub_year desc limit 25", nativeQuery = true)
 	public List<Book> findTop25RatedBooksByYearDesc();
+
+	public List<Book> findTop25ByOrderByPubYearAsc();
 }

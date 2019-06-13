@@ -39,7 +39,7 @@ public class MainController {
 //	public @ResponseBody List<Book> getAll(@RequestParam String q) {
 	public @ResponseBody List<Book> getAll() {
 //		return bookService.getSearchResults(q);
-		return bookService.getTopRatedBooksByYear();
+		return bookService.getAncientLiteratureBooks();
 	}
 
 	@RequestMapping("/test")

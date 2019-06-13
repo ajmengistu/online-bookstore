@@ -24,10 +24,11 @@ public class BookService {
 		return bookRepository.findTop25RatedBooksByYearDesc(); // list of top rated books by year
 	}
 
-	// list of ancient literature books
-//	public List<Book> getAncientLiteratureBooks(){
-
-//	}
+	public List<Book> getAncientLiteratureBooks() {
+		List<Book> list = bookRepository.findTop25ByOrderByPubYearAsc();
+		Collections.shuffle(list);
+		return list; // list of ancient literature books
+	}
 
 	public List<Book> getPopularBooks() {
 		List<Book> list = bookRepository.findTop25ByOrderByRatingsDesc();
