@@ -29,5 +29,5 @@ HELP.md
 .vscode/
 
 ### application.properties ###
-application.properties
-*.properties
+### application.properties
+### *.properties
