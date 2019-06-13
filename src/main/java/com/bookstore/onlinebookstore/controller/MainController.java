@@ -55,6 +55,9 @@ public class MainController {
 		modelMap.put("home", "/");
 		// List of Books
 		modelMap.put("topPopularBooksList", bookService.getPopularBooks());
+		modelMap.put("topRatedBooksList", bookService.getTopRatedBooks());
+		modelMap.put("topRatedBooksByYearList", bookService.getTopRatedBooksByYear());
+		modelMap.put("ancientLitBooksList", bookService.getAncientLiteratureBooks());
 		return "home";
 	}
 
