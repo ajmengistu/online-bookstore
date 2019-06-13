@@ -23,70 +23,6 @@
 </head>
 <body>
 	<th:block th:replace="fragments/general.html :: navbar"></th:block>
-	
-	<div class="container">
-		<h4 class="mt-4 mb-4">Most Popular Books</h4>
-		<div class="row">
-			<div class="owl-carousel owl-theme">
-				<div th:each="book : ${topPopularBooksList}">
-					<div class="item">
-						<div class="card" style="border: none;">
-							<img alt="" th:src="${book.image}"
-								style="height: 210px; width: 120px; margin-left: 20px;">
-							<div class="card-body">
-								<h6 th:text="${book.title}"></h6>
-								<p>
-									by <span th:text="${book.authors}"></span>
-								</p>
-								<h5 style="color: red;">
-									$<span class="text-center" th:text="${book.price}"></span>
-								</h5>
-								<th:block
-									th:if="${(T(Math).round(book.averageRating) - book.averageRating) <=
-										0.5
-										and (T(Math).round(book.averageRating) - book.averageRating) >= 0 }">
-									<!-- full stars  -->
-									<th:block
-										th:each="i : ${#numbers.sequence(
-											1,(T(Math).floor(book.averageRating)) )}">
-										<span class='fa fa-star checked' style='color: orange;'></span>
-									</th:block>
-									<!-- half stars -->
-									<span class='fa fa-star-half-full checked'
-										style='color: orange;'></span>
-									<!-- empty stars -->
-									<th:block
-										th:each="i : ${#numbers.sequence( 1,(4 -
-											T(Math).floor(book.averageRating)) )}">
-										<span class='fa fa-star'></span>
-									</th:block>
-								</th:block>
-								<th:block
-									th:unless="${(T(Math).round(book.averageRating) - book.averageRating)
-									<= 0.5
-										and (T(Math).round(book.averageRating) - book.averageRating) >= 0 }">
-									<!-- full stars  -->
-									<th:block
-										th:each="i : ${#numbers.sequence(
-											1,(T(Math).floor(book.averageRating)) )}">
-										<span class='fa fa-star checked' style='color: orange;'></span>
-									</th:block>
-									<!-- empty stars -->
-									<th:block
-										th:each="i : ${#numbers.sequence( 1,(5 -
-											T(Math).floor(book.averageRating)) )}">
-										<span class='fa fa-star'></span>
-									</th:block>
-								</th:block>
-								<span th:text="${book.ratings}"></span>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 
@@ -136,6 +72,8 @@
 	<script type="text/javascript"
 		src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="/css/owl.carousel.min.js"></script>
+	
+	
 	<script>
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({

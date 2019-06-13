@@ -1,7 +1,6 @@
 package com.bookstore.onlinebookstore.controller;
 
 import java.security.Principal;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,10 +37,15 @@ public class MainController {
 	private BookRepository bookRepository;
 
 	@RequestMapping("/top")
-	public @ResponseBody List<Book> getAll() {
-		List<Book> list = bookRepository.findTop25ByOrderByRatingsDesc();
-		Collections.shuffle(list);
-		return list;
+	public @ResponseBody List<Book> getAll(@RequestParam String q) {
+		System.out.println(q);
+//		return bookRepository.findByTitleContaining(q);
+		return bookRepository.findByTitleContainingOrAuthorsContaining(q, q);
+	}
+
+	@RequestMapping("/test")
+	public String test() {
+		return "test";
 	}
 
 	@RequestMapping("/")

@@ -44,8 +44,10 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 		// check user role and decide the redirect URL
 		if (roles.contains(RoleType.ADMIN.toString())) {
+			// url = /loginSuccessful?role=admin
 			url = "/admin";
 		} else if (roles.contains(RoleType.CUSTOMER.toString())) {
+			//url = /loginSuccessful?role=customer
 			url = "/account";
 		}
 		return url;
