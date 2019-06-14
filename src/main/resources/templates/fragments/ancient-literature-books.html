@@ -65,8 +65,7 @@
 										<span class='fa fa-star'></span>
 									</th:block>
 								</th:block>
-								<span th:text="${book.ratings}"></span>
-
+								<span th:text='${T(String).format("%, d", book.ratings)}'></span>
 							</div>
 						</div>
 					</div>

@@ -50,7 +50,7 @@
 								<span class='fa fa-star-half-full checked'
 									style='color: orange;'></span>
 								<!-- empty stars -->
-								<th:block th:if="${T(Math).floor(book.averageRating) < 4}">
+								<th:block th:if="${T(Math).floor(item.averageRating) < 4}">
 									<th:block
 										th:each="i : ${#numbers.sequence( 1,(4 -
 											T(Math).floor(item.averageRating)) )}">
@@ -75,7 +75,7 @@
 									<span class='fa fa-star'></span>
 								</th:block>
 							</th:block>
-							<span th:text="${item.ratings}"></span>
+							<span th:text='${T(String).format("%, d", item.ratings)}'></span>
 						</div>
 					</div>
 				</div>
