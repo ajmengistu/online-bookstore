@@ -25,7 +25,7 @@ public class CartController {
 	public String cartItem(RedirectAttributes redirectAttr, ModelMap modelMap, HttpServletRequest request) {
 //		redirectAttr.addAttribute(attributeValue)
 		System.out.println(request.getParameter("id"));
-		
+
 		if (modelMap.get("shoppingCart") == null) {
 			modelMap.addAttribute("shoppingCart", new ArrayList<Book>());
 		} else {
