@@ -10,16 +10,25 @@
 		<div class="row">
 			<div class="owl-carousel owl-theme">
 				<div th:each="book : ${topPopularBooksList}">
-					<div class="item">
+					<div class="item" th:title="${book.title}">
 						<div class="card" style="border: none;">
-							<img alt="" th:src="${book.image}"
+						<a
+								th:href="@{/products/book(id=${book.id}, title=${book.title})}">
+								<img alt="" th:src="${book.image}"
 								style="height: 210px; width: 120px; margin-left: 20px;">
+							</a>
 							<div class="card-body">
-								<h6 th:text="${book.title}"></h6>
+								<h6>
+									<a style="text-decorations: none;"
+										th:href="@{/products/book(id=${book.id}, title=${book.title})}"
+										th:text="${book.title}"></a>
+								</h6>
 								<p>
 									by <span th:text="${book.authors}"></span>
 								</p>
-
+								<p>
+									<span th:text="${book.pubYear}"></span>
+								</p>
 								<th:block
 									th:if="${(T(Math).round(book.averageRating) - book.averageRating) <=
 										0.5
