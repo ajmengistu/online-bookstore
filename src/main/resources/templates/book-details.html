@@ -74,7 +74,8 @@
 						<span th:text='${T(String).format("%, d", book.ratings)}'></span>
 						<br> <br>
 						<!-- <p th:text="${book.bookFormat}" class="badge badge-info"></p> -->
-						<form action='' method="post">
+						<form th:action="@{/cart/cart.do}" method="post">
+							<input type="hidden" name="id" th:value="${book.id}">
 							<button class="btn btn-primary" style="">Add to Cart</button>
 						</form>
 					</div>
