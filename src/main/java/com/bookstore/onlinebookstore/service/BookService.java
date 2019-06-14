@@ -36,10 +36,18 @@ public class BookService {
 		return list; // list of top 25 popular books in random order
 	}
 
-	public List<Book> getSearchResults(String query) {
+	public List<Book> getQueryResults(String query) {
 		List<Book> list = bookRepository.findByTitleContainingOrAuthorsContaining(query, query);
 		if (list.size() > 4)
 			return list.subList(0, 4);
+		else
+			return list;
+	}
+
+	public List<Book> getSearchResults(String query) {
+		List<Book> list = bookRepository.findByTitleContainingOrAuthorsContaining(query, query);
+		if (list.size() > 25)
+			return list.subList(0, 25);
 		else
 			return list;
 	}

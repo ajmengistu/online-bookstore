@@ -42,6 +42,22 @@ public class MainController {
 		return bookService.getAncientLiteratureBooks();
 	}
 
+	@RequestMapping("/query")
+	public @ResponseBody List<Book> getQueryResults(@RequestParam String q) {
+		return bookService.getQueryResults(q);
+	}
+
+	@RequestMapping("/search")
+	public String getQuerySearch(@RequestParam String q, ModelMap modelMap) {
+		modelMap.put("query", q);
+		modelMap.put("title", q + " - " + "OnlineBookstore");
+		List<Book> list = bookService.getSearchResults(q);
+		modelMap.put("numOfResults", list.size());
+		modelMap.put("searchResultList", list);
+
+		return "search-results";
+	}
+
 	@RequestMapping("/test")
 	public String test() {
 		return "test";
@@ -50,9 +66,9 @@ public class MainController {
 	@RequestMapping("/")
 	public String userHomePage(Model model, ModelMap modelMap) {
 		// Links
-		modelMap.put("userLogin", "/login");
-		modelMap.put("userRegister", "/register");
-		modelMap.put("home", "/");
+//		modelMap.put("userLogin", "/login");
+//		modelMap.put("userRegister", "/register");
+//		modelMap.put("home", "/");
 		// List of Books
 		modelMap.put("topPopularBooksList", bookService.getPopularBooks());
 		modelMap.put("topRatedBooksList", bookService.getTopRatedBooks());

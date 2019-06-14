@@ -19,12 +19,7 @@
 								<p>
 									by <span th:text="${book.authors}"></span>
 								</p>
-								<p>
-									 <span th:text="${book.pubYear}"></span>
-								</p>
-								<h5 style="color: red;">
-									$<span class="text-center" th:text="${book.price}"></span>
-								</h5>
+								 
 								<th:block
 									th:if="${(T(Math).round(book.averageRating) - book.averageRating) <=
 										0.5

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
+<title th:text="${title}"></title>
+</head>
+<body>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+	<div class="container">
+		<h4 class="mt-4">
+			Search results for "<span style="color: orange" th:text="${query}"></span>"
+		</h4>
+		<p>
+			<span th:text="${numOfResults}"></span> search results
+		</p>
+		<div class="row">
+			<div th:each="item,iter : ${searchResultList}">
+
+				<div class="item" style="width: 270px;">
+					<div class="card" style="border: none;">
+						<div class="card-body">
+							<img alt="" th:src="${item.image}"
+								style="height: 210px; width: 120px; margin-left: 20px;">
+						</div>
+					</div>
+					<div class="card" style="border: none;">
+						<div class="card-body">
+							<p th:text="${item.title}" style=""></p>
+							<p>
+								by <span th:text="${item.authors}"></span>
+							</p>
+							<p th:text="${item.pubYear}"></p>
+
+							<h5 style="color: red;">
+								$<span class="text-center" th:text="${item.price}"></span>
+							</h5>
+							<th:block
+								th:if="${(T(Math).round(item.averageRating) - item.averageRating) <=
+										0.5
+										and (T(Math).round(item.averageRating) - item.averageRating) >= 0 }">
+								<!-- full stars  -->
+								<th:block
+									th:each="i : ${#numbers.sequence(
+											1,(T(Math).floor(item.averageRating)) )}">
+									<span class='fa fa-star checked' style='color: orange;'></span>
+								</th:block>
+								<!-- half stars -->
+								<span class='fa fa-star-half-full checked'
+									style='color: orange;'></span>
+								<!-- empty stars -->
+								<th:block
+									th:each="i : ${#numbers.sequence( 1,(4 -
+											T(Math).floor(item.averageRating)) )}">
+									<span class='fa fa-star'></span>
+								</th:block>
+							</th:block>
+							<th:block
+								th:unless="${(T(Math).round(item.averageRating) - item.averageRating)
+									<= 0.5
+										and (T(Math).round(item.averageRating) - item.averageRating) >= 0 }">
+								<!-- full stars  -->
+								<th:block
+									th:each="i : ${#numbers.sequence(
+											1,(T(Math).floor(item.averageRating)) )}">
+									<span class='fa fa-star checked' style='color: orange;'></span>
+								</th:block>
+								<!-- empty stars -->
+								<th:block
+									th:each="i : ${#numbers.sequence( 1,(5 -
+											T(Math).floor(item.averageRating)) )}">
+									<span class='fa fa-star'></span>
+								</th:block>
+							</th:block>
+							<span th:text="${item.ratings}"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
+</body>
+</html>
