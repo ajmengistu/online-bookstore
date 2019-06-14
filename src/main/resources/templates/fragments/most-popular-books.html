@@ -19,7 +19,7 @@
 								<p>
 									by <span th:text="${book.authors}"></span>
 								</p>
-								 
+
 								<th:block
 									th:if="${(T(Math).round(book.averageRating) - book.averageRating) <=
 										0.5
@@ -34,10 +34,12 @@
 									<span class='fa fa-star-half-full checked'
 										style='color: orange;'></span>
 									<!-- empty stars -->
-									<th:block
-										th:each="i : ${#numbers.sequence( 1,(4 -
+									<th:block th:if="${T(Math).floor(book.averageRating) < 4}">
+										<th:block
+											th:each="i : ${#numbers.sequence( 1,(4 -
 											T(Math).floor(book.averageRating)) )}">
-										<span class='fa fa-star'></span>
+											<span class='fa fa-star'></span>
+										</th:block>
 									</th:block>
 								</th:block>
 								<th:block
