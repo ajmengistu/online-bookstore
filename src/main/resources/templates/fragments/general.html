@@ -11,9 +11,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
-		
+
 <link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="/css/owl.theme.default.min.css" />
@@ -97,11 +97,10 @@
 						success : function(data) {
 							console.log(data[0]);
 							response($.map(data, function(value, key) {
-								
 
 								return {
 									value : value.title,
-									id: value.id,
+									id : value.id,
 									avatar : value.image,
 									label : value.title,
 									title : value.title,
@@ -128,7 +127,7 @@
 		</script>
 
 		<script type="text/javascript"
-			src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+			src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 		<script src="/css/owl.carousel.min.js"></script>
 		<script>
 			var owl = $('.owl-carousel');

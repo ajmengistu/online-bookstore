@@ -22,4 +22,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	public List<Book> findTop25RatedBooksByYearDesc();
 
 	public List<Book> findTop25ByOrderByPubYearAsc();
+
+	public List<Book> findTop25ByAuthorsContaining(String author);
 }

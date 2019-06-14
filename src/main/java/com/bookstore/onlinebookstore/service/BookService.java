@@ -51,4 +51,23 @@ public class BookService {
 		else
 			return list;
 	}
+
+	public Book getBookById(String id) {
+		return bookRepository.findById(Long.parseLong(id)).get();
+	}
+
+	public List<Book> getBooksByAuthor(String author) {
+		return bookRepository.findTop25ByAuthorsContaining(author);
+	}
+
+	public List<Book> getBooksByAuthor(Book book) {
+		List<Book> booksByAuthor = getBooksByAuthor(book.getAuthors());
+		List<Book> popularBooks = getPopularBooks();
+		if (booksByAuthor.isEmpty())
+			return popularBooks;
+		else {
+			booksByAuthor.addAll(popularBooks.subList(0, 25 - booksByAuthor.size()));
+			return booksByAuthor;
+		}
+	}
 }

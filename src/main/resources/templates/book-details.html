@@ -2,9 +2,169 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
 <title th:text="${title}"></title>
 </head>
 <body>
-<h1>Book details</h1>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+	<div class="container mt-4">
+		<div class="card" style="border: none;" th:title="${book.title}">
+
+			<div class="row no-gutters">
+				<div class="col-auto">
+					<img th:src="${book.image}" class="img-fluid" alt=""
+						style="height: 210px; width: 120px; margin-left: 20px;">
+				</div>
+				<div class="col" style="margin-left: 50px;">
+					<div class="card-block px-2">
+						<span class="badge badge-success" style="margin-bottom: 15px;">In
+							Stock</span>
+						<h4 class="card-title" style="font-size: 30px;"
+							th:text="${book.title}"></h4>
+						<p class="card-text" style="font-size: 20px;">
+							by
+							<th:block th:text="${book.authors}"></th:block>
+						</p>
+						<p class="card-text" style="font-size: 20px;"
+							th:text="${book.pubYear}"></p>
+						<!-- Price -->
+						<h5 style="color: red;">
+							$<span class="text-center" th:text="${book.price}"></span>
+						</h5>
+
+						<th:block
+							th:if="${(T(Math).round(book.averageRating) - book.averageRating) <=
+										0.5
+										and (T(Math).round(book.averageRating) - book.averageRating) >= 0 }">
+							<!-- full stars  -->
+							<th:block
+								th:each="i : ${#numbers.sequence(
+											1,(T(Math).floor(book.averageRating)) )}">
+								<span class='fa fa-star checked' style='color: orange;'></span>
+							</th:block>
+							<!-- half stars -->
+							<span class='fa fa-star-half-full checked' style='color: orange;'></span>
+							<!-- empty stars -->
+							<th:block th:if="${T(Math).floor(book.averageRating) < 4}">
+								<th:block
+									th:each="i : ${#numbers.sequence( 1,(4 -
+											T(Math).floor(book.averageRating)) )}">
+									<span class='fa fa-star'></span>
+								</th:block>
+							</th:block>
+						</th:block>
+						<th:block
+							th:unless="${(T(Math).round(book.averageRating) - book.averageRating)
+									<= 0.5
+										and (T(Math).round(book.averageRating) - book.averageRating) >= 0 }">
+							<!-- full stars  -->
+							<th:block
+								th:each="i : ${#numbers.sequence(
+											1,(T(Math).floor(book.averageRating)) )}">
+								<span class='fa fa-star checked' style='color: orange;'></span>
+							</th:block>
+							<!-- empty stars -->
+							<th:block
+								th:each="i : ${#numbers.sequence( 1,(5 -
+											T(Math).floor(book.averageRating)) )}">
+								<span class='fa fa-star'></span>
+							</th:block>
+						</th:block>
+						<span th:text='${T(String).format("%, d", book.ratings)}'></span>
+						<br> <br>
+						<!-- <p th:text="${book.bookFormat}" class="badge badge-info"></p> -->
+						<form action='' method="post">
+							<button class="btn btn-primary" style="">Add to Cart</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mt-3 primary">
+		<h4 style="margin-top: 200px;">Customers also shopped for</h4>
+		<hr>
+		<br>
+	</div>
+	<div class="container mt-3">
+		<div class="row">
+			<div class="owl-carousel owl-theme">
+				<th:block th:each="book : ${similarBooks}">
+					<div class="item" th:title="${book.title}">
+						<div class="card" style="border: none;">
+							<a
+								th:href="@{/products/book(id=${book.id}, title=${book.title})}">
+								<img alt="" th:src="${book.image}"
+								style="height: 210px; width: 120px; margin-left: 20px;">
+							</a>
+							<div class="card-body">
+								<h6>
+									<a style="text-decorations: none;"
+										th:href="@{/products/book(id=${book.id}, title=${book.title})}"
+										th:text="${book.title}"></a>
+								</h6>
+								<p>
+									by <span th:text="${book.authors}"></span>
+								</p>
+								<p>
+									<span th:text="${book.pubYear}"></span>
+								</p>
+								<h5 style="color: red;">
+									$<span class="text-center" th:text="${book.price}"></span>
+								</h5>
+								<th:block
+									th:if="${(T(Math).round(book.averageRating) - book.averageRating) <=
+										0.5
+										and (T(Math).round(book.averageRating) - book.averageRating) >= 0 }">
+									<!-- full stars  -->
+									<th:block
+										th:each="i : ${#numbers.sequence(
+											1,(T(Math).floor(book.averageRating)) )}">
+										<span class='fa fa-star checked' style='color: orange;'></span>
+									</th:block>
+									<!-- half stars -->
+									<span class='fa fa-star-half-full checked'
+										style='color: orange;'></span>
+									<!-- empty stars -->
+									<th:block th:if="${T(Math).floor(book.averageRating) < 4}">
+										<th:block
+											th:each="i : ${#numbers.sequence( 1,(4 -
+											T(Math).floor(book.averageRating)) )}">
+											<span class='fa fa-star'></span>
+										</th:block>
+									</th:block>
+								</th:block>
+								<th:block
+									th:unless="${(T(Math).round(book.averageRating) - book.averageRating)
+									<= 0.5
+										and (T(Math).round(book.averageRating) - book.averageRating) >= 0 }">
+									<!-- full stars  -->
+									<th:block
+										th:each="i : ${#numbers.sequence(
+											1,(T(Math).floor(book.averageRating)) )}">
+										<span class='fa fa-star checked' style='color: orange;'></span>
+									</th:block>
+									<!-- empty stars -->
+									<th:block
+										th:each="i : ${#numbers.sequence( 1,(5 -
+											T(Math).floor(book.averageRating)) )}">
+										<span class='fa fa-star'></span>
+									</th:block>
+								</th:block>
+								<span th:text='${T(String).format("%, d", book.ratings)}'></span>
+							</div>
+						</div>
+					</div>
+
+				</th:block>
+
+			</div>
+		</div>
+	</div>
+
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
 </body>
 </html>
