@@ -23,6 +23,12 @@ public class CartController {
 		cartService.addItemToCart(modelMap, request);
 		return "redirect:/cart/view";
 	}
+	
+	@PostMapping("/update")
+	public String updateItem(ModelMap modelMap, HttpServletRequest request) {
+		cartService.updateItem(modelMap, request);
+		return "redirect:/cart/view";
+	}
 
 	@RequestMapping("/view")
 	public String getShoppingCart(ModelMap modelMap) {

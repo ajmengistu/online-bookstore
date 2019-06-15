@@ -8,7 +8,8 @@
 <body>
 	<th:block th:replace="fragments/general.html :: navbar"></th:block>
 
-	<th:block th:if="${cart != null}">
+	<th:block
+		th:if="${session.cart != null and session.cart.getSize() != 0}">
 		<div class="container mt-4" style="margin-left: 25%;">
 			<div class="row" style="margin-left: -20%;">
 				<div class="col-md-8" style="margin-left: 0%;">
@@ -27,8 +28,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- 		<c:set var="count" value="0" scope="page" />
-								<c:forEach items="${shoppingCart}" var="item"> -->
 								<th:block th:each="item,count : ${cart.getShoppingCart()}">
 									<tr>
 										<td th:title="${item.getBook().title}"><img
@@ -44,11 +43,11 @@
 										<td style="color: rgb(236, 74, 74); font-weight: bold;"
 											th:text="|$${item.getBook().price}|"></td>
 										<td>
-											<form
-												action='<%=WEB.CART_DO%>?id=${item.getBook().getBookId()}'
+											<form th:action="@{/cart/update(id=${item.getBook().id})}"
 												class="form-inline" method="post">
-												<select th:onchange="changeFun(1)" name="quantity"
-													class="form-control" style="margin-left: 42%;">
+												<select th:onchange="|changeFun(${count.index})|"
+													name="quantity" class="form-control"
+													style="margin-left: 42%;">
 													<option value="0">0</option>
 													<option value="1">1</option>
 													<option value="2">2</option>
@@ -64,10 +63,7 @@
 											</form>
 										</td>
 									</tr>
-									<!-- 	<c:set var="count" value="${count + 1}" scope="page" />
-								</c:forEach> -->
 								</th:block>
-
 							</tbody>
 						</table>
 					</div>
@@ -96,58 +92,37 @@
 							</tbody>
 						</table>
 						<br>
-
 						<form th:action="@{/cart/checkout}" method="post">
-							<input  class="btn btn-warning btn-block" type="submit" value="Checkout">
+							<input class="btn btn-primary btn-block" type="submit"
+								value="Checkout">
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		<div class="container" style="margin-left: 14.3%; margin-top: 1%;">
+			<a href="/" class="btn btn-warning"><i
+				class="fa
+                    fa-angle-left"></i> Continue Shopping</a>
+		</div>
+	</th:block>
+	<th:block
+		th:if="${session.cart == null or session.cart.getSize() == 0}">
+		<div class="container mt-4">
+			<h4>Your Shopping Cart is empty.</h4>
+			<p>
+				If you already have an account, <a th:href="@{/login}">Sign In</a>
+				to see your Cart or continue shopping on <a href="/">OnlineBookstore
+				</a>homepage!
+			</p>
+		</div>
 	</th:block>
 
-
-	<div class="container" style="margin-left: 14.3%; margin-top: 1%;">
-		<!-- <a href=<%=WEB.HOME%> class="btn btn-warning"><i
-				class="fa
-                    fa-angle-left"></i> Continue Shopping</a> -->
-	</div>
-	<!-- </c:if> -->
-
-	<!-- <c:choose>
-		<c:when test="${user != null}">
-			<c:if test="${empty shoppingCart}">
-				<div class="container">
-					<h4>Your Shopping Cart is empty.</h4>
-					<p>
-						Continue shopping on <a href=<%=WEB.HOME%>>OnlineBookStore
-							homepage!</a>
-					</p>
-				</div>
-			</c:if>
-
-		</c:when>
-		<c:otherwise>
-			<c:if test="${empty shoppingCart}">
-				<div class="container">
-					<h4>Your Shopping Cart is empty.</h4>
-					<p>
-						If you already have an account, <a href=<%=WEB.LOGIN%>>Sign In</a>
-						to see your Cart. Continue shopping on <a href=<%=WEB.HOME%>>OnlineBookStore
-							homepage!</a>
-					</p>
-				</div>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
- -->
 	<th:block th:insert="fragments/footer.html :: footer"></th:block>
 	<th:block th:insert="fragments/general.html :: scripts"></th:block>
 
 	<script>
 		function changeFun(id) {
-			alert(id);
 			document.getElementById(id).innerHTML = '<button class=\"btn btn-warning\" style=\"margin-left: 10%;\">Update</button>';
 		}
 	</script>

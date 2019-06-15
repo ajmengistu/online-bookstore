@@ -41,4 +41,24 @@ public class CartService {
 		}
 
 	}
+
+	public void updateItem(ModelMap modelMap, HttpServletRequest request) {
+		Cart cart = (Cart) modelMap.get("cart");
+		Item itemToRemove = null;
+		int qty = Integer.parseInt(request.getParameter("quantity"));
+
+		for (Item item : cart.getShoppingCart()) {
+			if (item.getBook().getId().equals(Long.parseLong(request.getParameter("id")))) {
+				itemToRemove = item;
+				break;
+			}
+		}
+
+		if (qty == 0) {
+			int i = cart.getShoppingCart().indexOf(itemToRemove);
+			cart.getShoppingCart().remove(i);
+		} else {
+			itemToRemove.setQuantity(qty);
+		}
+	}
 }
