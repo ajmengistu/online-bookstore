@@ -72,10 +72,10 @@
 						</div></li>
 
 					<li class="nav-item active" style="margin-right: 20px;"><a
-						class="nav-link" href="#"><b><i
+						class="nav-link" href="/cart/view"><b><i
 								class="fa
                                     fa-shopping-cart fa-2x"></i>
-								Cart (<span class="text-warning">&nbsp;5&nbsp;</span>)</b> <span
+								Cart (<span class="text-warning">&nbsp;<th:block th:text="${session.cart == null} ? 0  : ${session.cart.getSize()}"></th:block> &nbsp;</span>)</b> <span
 							class="sr-only">(current)</span></a></li>
 
 				</ul>

@@ -2,12 +2,142 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
 <title>Shopping Cart | OnlineBookstore</title>
 </head>
 <body>
-<h1>Shopping Cart</h1>
-<th:block th:each="item : ${cart.getShoppingCart()}">
-<h3 th:text="${item.book}"></h3>
-</th:block>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+	
+	<th:block th:if="${cart != null}">
+		<div class="container mt-4" style="margin-left: 25%;">
+			<div class="row" style="margin-left: -20%;">
+				<div class="col-md-8" style="margin-left: 0%;">
+
+					<div class="card card-body bg-light">
+						<div style="margin-bottom: 1%;">
+							<h4 style="font-weight: bold;">Shopping Cart</h4>
+						</div>
+						<table class="table">
+							<thead>
+								<tr style="text-align: center;">
+									<th style="width: 10%">Product</th>
+									<th style="width: 35%"></th>
+									<th style="width: 8%">Price</th>
+									<th style="width: 50%">Quantity</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- 		<c:set var="count" value="0" scope="page" />
+								<c:forEach items="${shoppingCart}" var="item"> -->
+								<th:block th:each="item,count : ${cart.getShoppingCart()}">
+									<tr>
+										<td><img th:src="${item.getBook().image}" alt="img"
+											style="height: 150px; width: 90px; margin-left: 20px;"></td>
+										<td><a
+											href="book?id=${item.getBook().getBookId()}&title=${item.getBook().getTitle()}"
+											style="font-weight: bold; font-size: 20px;" th:text="${item.getBook().title}"></a>
+											<p>by <span th:text="${item.getBook().authors}"></span> </p></td>
+										<td style="color: rgb(236, 74, 74); font-weight: bold;" th:text="|$${item.getBook().price}|"></td>
+										<td>
+											<form
+												action='<%=WEB.CART_DO%>?id=${item.getBook().getBookId()}'
+												class="form-inline" method="post">
+												<select th:onchange="changeFun(1)" name="quantity"
+													class="form-control" style="margin-left: 42%;">
+													<option value="0">0</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+													<option selected="selected" th:text="${item.getQuantity()}"></option>
+												</select> <span th:id="${count.index}"></span>
+											</form>
+										</td>
+									</tr>
+									<!-- 	<c:set var="count" value="${count + 1}" scope="page" />
+								</c:forEach> -->
+								</th:block>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card card-body bg-light">
+						<h4 style="font-weight: bold;">Cart Summary</h4>
+						<br>
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>Subtotal</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;">$${subTotal}</td>
+								</tr>
+								<tr>
+									<td>Shipping</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;">$${shippingCost}</td>
+								</tr>
+								<tr style="background-color: #ccffb3; margin-top: 10%;">
+									<td>Total</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;">$${totalCost}</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- 		<br> <a href=<%=WEB.CHECKOUT_DO%> class="btn btn-primary">Checkout</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</th:block>
+
+
+	<div class="container" style="margin-left: 14.3%; margin-top: 1%;">
+		<!-- <a href=<%=WEB.HOME%> class="btn btn-warning"><i
+				class="fa
+                    fa-angle-left"></i> Continue Shopping</a> -->
+	</div>
+	<!-- </c:if> -->
+
+	<!-- <c:choose>
+		<c:when test="${user != null}">
+			<c:if test="${empty shoppingCart}">
+				<div class="container">
+					<h4>Your Shopping Cart is empty.</h4>
+					<p>
+						Continue shopping on <a href=<%=WEB.HOME%>>OnlineBookStore
+							homepage!</a>
+					</p>
+				</div>
+			</c:if>
+
+		</c:when>
+		<c:otherwise>
+			<c:if test="${empty shoppingCart}">
+				<div class="container">
+					<h4>Your Shopping Cart is empty.</h4>
+					<p>
+						If you already have an account, <a href=<%=WEB.LOGIN%>>Sign In</a>
+						to see your Cart. Continue shopping on <a href=<%=WEB.HOME%>>OnlineBookStore
+							homepage!</a>
+					</p>
+				</div>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+ -->
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
+
+	<script>
+		function changeFun(id) {	
+			alert(id);
+		  document.getElementById(id).innerHTML = '<button class=\"btn btn-warning\" style=\"margin-left: 10%;\">Update</button>';
+		}
+	</script>
 </body>
 </html>

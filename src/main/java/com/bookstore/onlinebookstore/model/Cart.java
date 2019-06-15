@@ -18,6 +18,10 @@ public class Cart {
 		return shoppingCart.size();
 	}
 
+	public Boolean isEmpty() {
+		return shoppingCart.isEmpty();
+	}
+
 	// total (bigdecimal)
 
 	public boolean addItem(Item item) {
@@ -28,4 +32,5 @@ public class Cart {
 	public String toString() {
 		return "Cart [shoppingCart=" + shoppingCart + "]";
 	}
+
 }

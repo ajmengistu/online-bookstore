@@ -1,5 +1,7 @@
 package com.bookstore.onlinebookstore.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +33,31 @@ public class CartController {
 			Book book = bookService.getBookById(request.getParameter("id"));
 			cart.addItem(new Item(book, 1));
 			modelMap.put("cart", cart);
-			System.out.println("true");
+
 		} else {
 			Cart cart = (Cart) modelMap.get("cart");
 			Book book = bookService.getBookById(request.getParameter("id"));
-//			if(cart.getShoppingCart().contains( ))
-			cart.addItem(new Item(book, 1));
-			modelMap.put("cart", cart);
-			System.out.println("added : " + cart.getSize());
+			Boolean flag = false;
+			for (Item item : cart.getShoppingCart()) {
+				if (item.getBook().equals(book)) {
+					item.setQuantity(item.getQuantity() + 1);
+					flag = true;
+					break;
+				}
+			}
 
+			if (!flag) {
+				cart.addItem(new Item(book, 1));
+				modelMap.put("cart", cart);
+			}
 		}
 		return "redirect:/cart/view";
 	}
 
 	@RequestMapping("/view")
-	public String getShoppingCart() {
+	public String getShoppingCart(ModelMap modelMap) {
+		modelMap.put("cart", (Cart) modelMap.get("cart"));
+		System.out.println("carting");
 		return "shopping-cart";
 	}
 }
