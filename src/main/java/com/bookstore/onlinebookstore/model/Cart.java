@@ -1,5 +1,6 @@
 package com.bookstore.onlinebookstore.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,18 +15,34 @@ public class Cart {
 		this.shoppingCart = shoppingCart;
 	}
 
+	public BigDecimal getShippingCost() {
+		return new BigDecimal("5.99");
+	}
+
 	public Integer getSize() {
-		return shoppingCart.size();
+		int totalItems = 0;
+		for (Item item : shoppingCart)
+			totalItems += item.getQuantity();
+		return totalItems;
 	}
 
 	public Boolean isEmpty() {
 		return shoppingCart.isEmpty();
 	}
 
-	// total (bigdecimal)
+	public BigDecimal getSubTotal() {
+		BigDecimal total = new BigDecimal("0");
+		for (Item item : shoppingCart)
+			total = total.add(item.getBook().getPrice().multiply(new BigDecimal(item.getQuantity().toString())));
+		return total;
+	}
 
 	public boolean addItem(Item item) {
 		return shoppingCart.add(item);
+	}
+	
+	public BigDecimal getTotalCost() {
+		return getSubTotal().add(getShippingCost());
 	}
 
 	@Override

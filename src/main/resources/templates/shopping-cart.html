@@ -7,7 +7,7 @@
 </head>
 <body>
 	<th:block th:replace="fragments/general.html :: navbar"></th:block>
-	
+
 	<th:block th:if="${cart != null}">
 		<div class="container mt-4" style="margin-left: 25%;">
 			<div class="row" style="margin-left: -20%;">
@@ -31,13 +31,18 @@
 								<c:forEach items="${shoppingCart}" var="item"> -->
 								<th:block th:each="item,count : ${cart.getShoppingCart()}">
 									<tr>
-										<td><img th:src="${item.getBook().image}" alt="img"
+										<td th:title="${item.getBook().title}"><img
+											th:src="${item.getBook().image}" alt="img"
 											style="height: 150px; width: 90px; margin-left: 20px;"></td>
-										<td><a
-											href="book?id=${item.getBook().getBookId()}&title=${item.getBook().getTitle()}"
-											style="font-weight: bold; font-size: 20px;" th:text="${item.getBook().title}"></a>
-											<p>by <span th:text="${item.getBook().authors}"></span> </p></td>
-										<td style="color: rgb(236, 74, 74); font-weight: bold;" th:text="|$${item.getBook().price}|"></td>
+										<td th:title="${item.getBook().title}"><a
+											th:href="@{/products/book(id=${item.getBook().id}, title=${item.getBook().title})}"
+											style="font-weight: bold; font-size: 20px;"
+											th:text="${item.getBook().title}"></a>
+											<p>
+												by <span th:text="${item.getBook().authors}"></span>
+											</p></td>
+										<td style="color: rgb(236, 74, 74); font-weight: bold;"
+											th:text="|$${item.getBook().price}|"></td>
 										<td>
 											<form
 												action='<%=WEB.CART_DO%>?id=${item.getBook().getBookId()}'
@@ -75,19 +80,22 @@
 							<tbody>
 								<tr>
 									<td>Subtotal</td>
-									<td style="color: rgb(236, 74, 74); font-weight: bold;">$${subTotal}</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;"
+										th:text="|$${session.cart.getSubTotal()}|"></td>
 								</tr>
 								<tr>
 									<td>Shipping</td>
-									<td style="color: rgb(236, 74, 74); font-weight: bold;">$${shippingCost}</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;"
+										th:text="|$${session.cart.getShippingCost()}|"></td>
 								</tr>
 								<tr style="background-color: #ccffb3; margin-top: 10%;">
 									<td>Total</td>
-									<td style="color: rgb(236, 74, 74); font-weight: bold;">$${totalCost}</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;"
+										th:text="|$${session.cart.getTotalCost()}|"></td>
 								</tr>
 							</tbody>
 						</table>
-						<!-- 		<br> <a href=<%=WEB.CHECKOUT_DO%> class="btn btn-primary">Checkout</a> -->
+						<br> <a th:href="@{/}" class="btn btn-warning">Checkout</a>
 					</div>
 				</div>
 			</div>
@@ -134,9 +142,9 @@
 	<th:block th:insert="fragments/general.html :: scripts"></th:block>
 
 	<script>
-		function changeFun(id) {	
+		function changeFun(id) {
 			alert(id);
-		  document.getElementById(id).innerHTML = '<button class=\"btn btn-warning\" style=\"margin-left: 10%;\">Update</button>';
+			document.getElementById(id).innerHTML = '<button class=\"btn btn-warning\" style=\"margin-left: 10%;\">Update</button>';
 		}
 	</script>
 </body>

@@ -17,7 +17,7 @@ public class Item {
 		this.book = book;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
