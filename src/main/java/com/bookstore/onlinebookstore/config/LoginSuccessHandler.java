@@ -24,7 +24,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	@Override
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		String targetUrl = determineTargetUrl(authentication);
+		String targetUrl = determineTargetUrl(authentication, request.getSession().getAttribute("URL_REF").toString());
 		if (response.isCommitted()) {
 
 		}
@@ -32,7 +32,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
-	protected String determineTargetUrl(Authentication authentication) {
+	protected String determineTargetUrl(Authentication authentication, String url_ref) {
 		String url = "/login?error=true";
 
 		// Fetch the roles from Authentication object
@@ -47,8 +47,14 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 			// url = /loginSuccessful?role=admin
 			url = "/admin";
 		} else if (roles.contains(RoleType.CUSTOMER.toString())) {
-			//url = /loginSuccessful?role=customer
-			url = "/account";
+			// url = /loginSuccessful?role=customer
+			if (url_ref != null && url_ref.contains("/cart/view")) {
+				System.out.println("-------------------------------" + url_ref);
+				url = "/cart/checkout";
+			} else {
+				System.out.println("hello: " + url_ref);
+				url = "/account";
+			}
 		}
 		return url;
 	}

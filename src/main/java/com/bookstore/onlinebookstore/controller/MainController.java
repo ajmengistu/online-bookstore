@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookstore.onlinebookstore.model.Book;
@@ -24,6 +25,7 @@ import com.bookstore.onlinebookstore.repository.UserRepository;
 import com.bookstore.onlinebookstore.service.BookService;
 
 @Controller
+@SessionAttributes({"URL_REF"})
 public class MainController {
 	@Autowired
 	private UserRepository userRepo;
@@ -104,6 +106,9 @@ public class MainController {
 	public String userLoginPage(ModelMap modelMap, HttpServletRequest request) {
 		modelMap.put("userLogin", "/login.do");
 		System.out.println("Referer: " + request.getHeader("Referer"));
+
+		modelMap.addAttribute("URL_REF", request.getHeader("Referer"));
+		
 		return "login";
 	}
 
@@ -120,7 +125,7 @@ public class MainController {
 
 		return "admin";
 	}
-
+	
 	@RequestMapping("/logoutSuccessful")
 	public String userLogoutValidation(ModelMap modelMap, RedirectAttributes redirectAttr) {
 		System.out.println("You have logged out!");
