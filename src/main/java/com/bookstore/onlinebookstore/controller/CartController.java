@@ -28,4 +28,9 @@ public class CartController {
 	public String getShoppingCart(ModelMap modelMap) {
 		return "shopping-cart";
 	}
+
+	@PostMapping("/checkout")
+	public String checkoutCart() {
+		return "checkout";
+	}
 }

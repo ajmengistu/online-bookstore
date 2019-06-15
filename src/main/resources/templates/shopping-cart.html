@@ -95,7 +95,11 @@
 								</tr>
 							</tbody>
 						</table>
-						<br> <a th:href="@{/}" class="btn btn-warning">Checkout</a>
+						<br>
+
+						<form th:action="@{/cart/checkout}" method="post">
+							<input  class="btn btn-warning btn-block" type="submit" value="Checkout">
+						</form>
 					</div>
 				</div>
 			</div>
