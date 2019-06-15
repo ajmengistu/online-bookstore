@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head-links">
 <meta charset="utf-8">
 <meta name="viewport"
@@ -49,34 +50,79 @@
 					<li class="nav-item dropdown ml-auto"><a
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> <span
-							style="color: aquamarine;"> Sign in <i
-								class="fa
+						aria-haspopup="true" aria-expanded="false"> <th:block
+								th:if="${session.user == null}">
+								<span style="color: aquamarine;"> Sign in <i
+									class="fa
                                     fa-sign-in"
-								aria-hidden="true"></i>
-						</span>
+									aria-hidden="true"></i>
+
+								</span>
+							</th:block> <th:block th:if="${session.user != null}">
+								<span style="color: aquamarine;">Welcome,
+									[[${session.user.firstName}]] [[${session.user.lastName}]] <i
+									class="fa
+                                    fa-sign-in"
+									aria-hidden="true"></i>
+
+								</span>
+							</th:block>
+
+
 					</a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" th:href="@{/login}"> <span
-								class="text-warning"></span>
-								<button type="button"
-									class="btn btn-warning
-                                    btn-md btn-block"
-									style="margin-bottom: 20px;">Sign in</button>
-							</a> <a class="dropdown-item" th:href="@{/register}">New
-								customer? <span style="text-decoration: underline;">Register
-									here</span>
-							</a>
 
+							<th:block th:if="${session.user == null}">
+								<a class="dropdown-item" th:href="@{/login}"> <span
+									class="text-warning"></span>
+									<button type="button"
+										class="btn btn-warning
+                                    btn-md btn-block"
+										style="margin-bottom: 20px;">Sign in</button>
+								</a>
+								<a class="dropdown-item" th:href="@{/register}">New
+									customer? <span style="text-decoration: underline;">Register
+										here</span>
+								</a>
+							</th:block>
+
+							<th:block th:if="${session.user != null}">
+								<a class="dropdown-item" href="/c/account"><i
+									class="fa
+                                        fa-user"
+									aria-hidden="true"></i>&nbsp;&nbsp;<span
+									style="font-weight: bold;">Your Account</span> </a>
+								<a class="dropdown-item" href="/c/order-history"><i
+									class="fa
+                                        fa-list"
+									aria-hidden="true"></i>&nbsp;&nbsp;<span>Your Orders</span></a>
+								<a class="dropdown-item" href="/c/book-recommendations"><i
+									class="fa
+                                        fa-book"
+									aria-hidden="true"></i>&nbsp;&nbsp;<span>Your
+										Recommendations</span></a>
+								<br>
+								<div class="dropdown-item"
+									style="text-decoration: none; color: inherit">
+									<form th:action="@{/logout}" method="post">
+										<button type="submit"
+											class="btn btn-warning
+                                        btn-md btn-block">
+											Sign out</button>
+									</form>
+								</div>
+							</th:block>
 						</div></li>
 
 					<li class="nav-item active" style="margin-right: 20px;"><a
-						class="nav-link" href="/cart/view"><b><i
+						class="nav-link" th:href="@{/cart/view}"><b><i
 								class="fa
                                     fa-shopping-cart fa-2x"></i>
-								Cart (<span class="text-warning">&nbsp;<th:block th:text="${session.cart == null} ? 0  : ${session.cart.getSize()}"></th:block> &nbsp;</span>)</b> <span
-							class="sr-only">(current)</span></a></li>
+								Cart (<span class="text-warning">&nbsp;<th:block
+										th:text="${session.cart == null} ? 0 : ${session.cart.getSize()}"></th:block>
+
+							</span>)</b> <span class="sr-only">(current)</span></a></li>
 
 				</ul>
 			</div>

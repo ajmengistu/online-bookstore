@@ -25,7 +25,7 @@ import com.bookstore.onlinebookstore.repository.UserRepository;
 import com.bookstore.onlinebookstore.service.BookService;
 
 @Controller
-@SessionAttributes({"URL_REF"})
+@SessionAttributes({ "URL_REF", "user" })
 public class MainController {
 	@Autowired
 	private UserRepository userRepo;
@@ -108,24 +108,49 @@ public class MainController {
 		System.out.println("Referer: " + request.getHeader("Referer"));
 
 		modelMap.addAttribute("URL_REF", request.getHeader("Referer"));
-		
+
 		return "login";
 	}
 
 	@RequestMapping("/account")
 	public String userAccountPage(ModelMap modelMap, Principal principal) {
-		System.out.println("Account requst handler: ");
-		modelMap.addAttribute("welcomeMessage", "Welcome!").addAttribute("user",
-				userRepo.findByEmail(principal.getName()));
+		modelMap.put("welcomeMessage", "Welcome!");
+//		User user = userRepo.findByEmail(principal.getName());
+//		user.setPassword(null);
+//		user.setId(null);
+//		modelMap.put("user", user);
+//
+//		System.out.println(user);
 		return "account";
 	}
 
 	@RequestMapping("/admin")
 	public String adminHomePage(ModelMap modelMap) {
-
 		return "admin";
 	}
-	
+
+	@RequestMapping("/loginSuccessful")
+	public String userLoginSuccessful(@RequestParam String role, ModelMap modelMap, HttpServletRequest request,
+			Principal principal) {
+		User user = userRepo.findByEmail(principal.getName());
+		user.setPassword(null);
+		user.setId(null);
+		modelMap.put("user", user);
+
+		System.out.println(user);
+
+		String url_ref = request.getSession().getAttribute("URL_REF").toString();
+		String url = null;
+		if (url_ref != null && url_ref.contains("/cart/view")) {
+			System.out.println("-------------------------------" + url_ref);
+			url = "redirect:/cart/checkout";
+		} else {
+			System.out.println("hello: " + url_ref);
+			url = "redirect:/account";
+		}
+		return url;
+	}
+
 	@RequestMapping("/logoutSuccessful")
 	public String userLogoutValidation(ModelMap modelMap, RedirectAttributes redirectAttr) {
 		System.out.println("You have logged out!");

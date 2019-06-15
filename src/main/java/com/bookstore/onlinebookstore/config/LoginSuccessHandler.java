@@ -20,11 +20,10 @@ import com.bookstore.onlinebookstore.model.enums.RoleType;
 
 @Configuration
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
 	@Override
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		String targetUrl = determineTargetUrl(authentication, request.getSession().getAttribute("URL_REF").toString());
+		String targetUrl = determineTargetUrl(authentication);
 		if (response.isCommitted()) {
 
 		}
@@ -32,7 +31,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
 
-	protected String determineTargetUrl(Authentication authentication, String url_ref) {
+	protected String determineTargetUrl(Authentication authentication) {
 		String url = "/login?error=true";
 
 		// Fetch the roles from Authentication object
@@ -44,17 +43,10 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 		// check user role and decide the redirect URL
 		if (roles.contains(RoleType.ADMIN.toString())) {
-			// url = /loginSuccessful?role=admin
-			url = "/admin";
+			 url = "loginSuccessful?role=admin";
+//			url = "/admin";
 		} else if (roles.contains(RoleType.CUSTOMER.toString())) {
-			// url = /loginSuccessful?role=customer
-			if (url_ref != null && url_ref.contains("/cart/view")) {
-				System.out.println("-------------------------------" + url_ref);
-				url = "/cart/checkout";
-			} else {
-				System.out.println("hello: " + url_ref);
-				url = "/account";
-			}
+			 url = "/loginSuccessful?role=customer";
 		}
 		return url;
 	}
