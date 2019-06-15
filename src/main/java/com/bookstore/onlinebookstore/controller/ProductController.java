@@ -23,5 +23,4 @@ public class ProductController {
 		modelMap.put("similarBooks", bookService.getBooksByAuthor(book));
 		return "book-details";
 	}
-
 }

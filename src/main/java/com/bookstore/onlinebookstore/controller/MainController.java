@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookstore.onlinebookstore.model.Book;
@@ -25,7 +24,6 @@ import com.bookstore.onlinebookstore.repository.UserRepository;
 import com.bookstore.onlinebookstore.service.BookService;
 
 @Controller
-@SessionAttributes({"shoppingCart"})
 public class MainController {
 	@Autowired
 	private UserRepository userRepo;
