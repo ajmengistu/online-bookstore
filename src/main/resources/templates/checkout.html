@@ -4,8 +4,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Checkout | OnlineBookstore</title>
-<link rel="stylesheet" type="text/css"
-	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<th:block
+	th:insert="fragments/bootstrap-starter-template.html :: bootstrap-css"></th:block>
 </head>
 <body>
 
@@ -18,57 +18,33 @@
 	<div class="container mt-4">
 		<h3>Review your order</h3>
 	</div>
-	<div class="modal fade" id="modalRegisterForm" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header text-center">
-					<h4 class="modal-title w-100 font-weight-bold">Shipping
-						address</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body mx-3">
-					<div class="md-form mb-5">
-						<form action="addAddress.do" method="post">
-							<!-- <label for="inputEmail4"><strong>Full Name:</strong></label> <input
-								type="text" class="form-control" id="inputName"
-								placeholder="Name"> <br>  -->
-							<label for="inputAddress"><strong>Address 1:</strong></label> <input
-								required type="text" class="form-control" name="inputAddress"
-								placeholder="1234 Main St"> <br> <label
-								for="inputAddress2"><strong>Address 2:</strong></label> <input
-								required type="text" class="form-control" name="inputAddress2"
-								placeholder="Apartment, studio, or floor"> <br> <label
-								for="inputCity"><strong>City:</strong></label> <input required
-								type="text" class="form-control" name="inputCity"> <br>
-							<label for="inputState"><strong>State:</strong></label> <input
-								required type="text" class="form-control" name="inputState">
-							<br> <label for="inputZip"><strong>ZIP:</strong></label> <input
-								required type="number" class="form-control" name="inputZip">
 
-							<div class="modal-footer d-flex justify-content-center"
-								style="margin-top: 50px;">
-								<button class="btn btn-warning">Add address</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<th:block
+		th:insert="fragments/shipping-address-modal-form :: update-shipping-address"></th:block>
+
+	<th:block
+		th:insert="fragments/shipping-address-modal-form :: add-shipping-address"></th:block>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
 				<h6>Shipping Address</h6>
-				<!-- <br> <span> <c:if test="${! empty userAddress}"> -->
-				${user.getFirstName()} ${user.getLastName()}
-				<!-- 				</c:if>
-				</span> -->
-				<p>$${userAddress}</p>
-				<a href="" data-toggle="modal" data-target="#modalRegisterForm">${addressStatus}</a>
+				<th:block th:if="${userAddress != null}">
+				[[${session.user.firstName}]] [[${session.user.lastName}]]
+				<p>[[${userAddress}]]</p>
+					<button class="btn btn-primary" data-toggle="modal"
+						data-target="#updateAddressForm">Update address</button>
+					<a href="" data-toggle="modal" data-target="#updateAddressForm">Update
+						address</a>
+				</th:block>
+				<th:block th:if="${userAddress == null}">
+					<button class="btn btn-primary mt-4" data-toggle="modal"
+						data-target="#addShippingAddress">Add shipping address</button>
+					<a href=""></a>
+				</th:block>
+
+
+
 			</div>
 			<div class="col-md-5">
 				<h6>Payment Method</h6>
@@ -118,9 +94,9 @@
 
 	<div class="container">
 		<div class="container mb-4">
-		<h5 style="color: orange;">Estimated delivery: [[${session.cart.getEstimatedDeliveryDate()}]]
-			</h5>
-	</div>
+			<h5 style="color: orange;">Estimated delivery:
+				[[${session.cart.getEstimatedDeliveryDate()}]]</h5>
+		</div>
 		<div class="row">
 			<div class="col-md-8">
 				<div class="card card-body bg-light">
@@ -137,19 +113,19 @@
 							<!-- <c:set var="count" value="0" scope="page" />
 							<c:forEach items="${shoppingCart}" var="item"> -->
 							<th:block th:each="item : ${session.cart.shoppingCart}">
-							<tr>
-								<td><img th:src="${item.getBook().image}" alt="img"
-									style="height: 150px; width: 90px; margin-left: 20px;"></td>
-								<td><span class="badge badge-success"
-									style="margin-bottom: 15px;">In Stock</span><br> <a
-									style="font-size: 15px; font-weight: bold">[[${item.getBook().title}]]</a>
-									<p>by [[${item.getBook().authors}]]</p>
-									<p style="color: rgb(236, 74, 74); font-weight: bold;">$[[${item.getBook().price}]]</p>
-									<p>
-										<span style="font-weight: bold;">Quantity: </span>[[${item.getQuantity()}]]
-									</p></td>
-							</tr>
-							<!-- <c:set var="count" value="${count + 1}" scope="page" />
+								<tr>
+									<td><img th:src="${item.getBook().image}" alt="img"
+										style="height: 150px; width: 90px; margin-left: 20px;"></td>
+									<td><span class="badge badge-success"
+										style="margin-bottom: 15px;">In Stock</span><br> <a
+										style="font-size: 15px; font-weight: bold">[[${item.getBook().title}]]</a>
+										<p>by [[${item.getBook().authors}]]</p>
+										<p style="color: rgb(236, 74, 74); font-weight: bold;">$[[${item.getBook().price}]]</p>
+										<p>
+											<span style="font-weight: bold;">Quantity: </span>[[${item.getQuantity()}]]
+										</p></td>
+								</tr>
+								<!-- <c:set var="count" value="${count + 1}" scope="page" />
 							</c:forEach> -->
 							</th:block>
 
@@ -160,6 +136,10 @@
 			</div>
 		</div>
 	</div>
+
+
+	<th:block
+		th:insert="fragments/bootstrap-starter-template.html :: bootstrap-scripts"></th:block>
 	<th:block th:insert="fragments/footer.html :: footer"></th:block>
 </body>
 </html>

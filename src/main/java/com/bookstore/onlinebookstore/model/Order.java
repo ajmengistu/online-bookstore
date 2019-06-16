@@ -17,7 +17,7 @@ public class Order {
 	@Column(nullable = false, updatable = true, unique = true)
 	private Long orderId;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String hash;
 
 	@Column(nullable = false, unique = true)

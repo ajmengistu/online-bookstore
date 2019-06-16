@@ -18,11 +18,11 @@ public class AddressService {
 	public void getRecentlyUsedAddress(ModelMap modelMap, Long userId) {
 		Order order = orderService.getRecentlyUsedAddress(userId);
 		if (order == null) {
-			Address recentlyUsedAddress = addressRepository.findByUserIdOrderBydateAddedDesc(userId);
+			Address recentlyUsedAddress = addressRepository.findByUserIdOrderByDateAddedDesc(userId);
 			System.out.println(recentlyUsedAddress);
 			modelMap.put("userAddress", null);
 		} else {
-			Address recentlyAddedAddress = addressRepository.findByUserIdOrderBydateAddedDesc(order.getAddressId());
+			Address recentlyAddedAddress = addressRepository.findByUserIdOrderByDateAddedDesc(order.getAddressId());
 			System.out.println(recentlyAddedAddress);
 			modelMap.put("userAddress", formatAddress(recentlyAddedAddress));
 		}

@@ -12,6 +12,6 @@ public class OrderService {
 	private OrderRepository orderRepository;
 
 	public Order getRecentlyUsedAddress(Long userId) {
-		return orderRepository.findByUserIdOrderBydateOrderedDesc(userId);
+		return orderRepository.findByUserIdOrderByDateOrderedDesc(userId);
 	}
 }
