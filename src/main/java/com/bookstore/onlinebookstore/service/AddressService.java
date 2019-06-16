@@ -2,8 +2,6 @@ package com.bookstore.onlinebookstore.service;
 
 import java.util.Date;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -52,7 +50,7 @@ public class AddressService {
 		return address;
 	}
 
-	public void addAdress(@Valid AddressForm addressForm, Long id) {
+	public void addAddress(AddressForm addressForm, Long id) {
 		Address address = new Address();
 		address.setUserId(id);
 		address.setFirstName(addressForm.getInputFirstName());
@@ -64,5 +62,10 @@ public class AddressService {
 		address.setZip(addressForm.getInputZip());
 		address.setDateAdded(new Date());
 		addressRepository.save(address);
+	}
+
+	public void updateAddress(AddressForm addressForm, Long id) {
+		addAddress(addressForm, id);
+
 	}
 }

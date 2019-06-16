@@ -30,7 +30,7 @@
 			<div class="col-md-3">
 				<h6>Shipping Address </h6>
 				<th:block th:if="${userAddress}">
-				[[${session.user.firstName}]] [[${session.user.lastName}]] <br>
+				[[${userAddress.firstName}]] [[${userAddress.lastName}]] <br>
 					[[${userAddress.address1}]]
 
 					<th:block th:if="${userAddress.address2}">

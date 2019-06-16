@@ -72,8 +72,21 @@ public class CartController {
 			return "/cart/checkout";
 		}
 		User user = (User) request.getSession().getAttribute("user");
-		addressService.addAdress(addressForm, user.getId());
+		addressService.addAddress(addressForm, user.getId());
 
+		return "redirect:/cart/checkout";
+	}
+
+	@PostMapping("/address/update")
+	public String updateShippingAddress(ModelMap modelMap, @Valid AddressForm addressForm, BindingResult bindingResult,
+			HttpServletRequest request) {
+		if (bindingResult.hasErrors()) {
+			System.out.println("--------------------------Error-----------------------------");
+			System.out.println(bindingResult.getFieldError());
+			return "/cart/checkout";
+		}
+		User user = (User) request.getSession().getAttribute("user");
+		addressService.updateAddress(addressForm, user.getId());
 		return "redirect:/cart/checkout";
 	}
 }
