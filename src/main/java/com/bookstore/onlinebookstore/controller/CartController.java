@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.CartService;
 
@@ -30,7 +31,7 @@ public class CartController {
 	 * processPaymentService.getBrainTreeGateway(); ClientTokenRequest
 	 * clientTokenRequest = new ClientTokenRequest(); String clientToken =
 	 * gateway.clientToken().generate(clientTokenRequest); HashMap<String, String>
-	 * map = new HashMap<>(); map.put("clientToken", clientToken); return map; } 
+	 * map = new HashMap<>(); map.put("clientToken", clientToken); return map; }
 	 */
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
@@ -51,11 +52,11 @@ public class CartController {
 
 	@RequestMapping("/checkout")
 	@PostMapping("/checkout")
-	public String checkoutCart(ModelMap modelMap) {
+	public String checkoutCart(ModelMap modelMap, HttpServletRequest request) {
 		// if shopping cart is empty redirect user to the home page
 		// mostly recently used shipping address
-		 addressService.getRecentlyUsedAddress(modelMap);
-
+		User user = (User) request.getSession().getAttribute("user");
+		addressService.getRecentlyUsedAddress(modelMap, user.getId());	
 		return "checkout";
 	}
 }
