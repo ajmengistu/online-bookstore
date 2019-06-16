@@ -55,5 +55,4 @@ public class Cart {
 	public String toString() {
 		return "Cart [shoppingCart=" + shoppingCart + "]";
 	}
-
 }
