@@ -55,6 +55,8 @@ public class AddressService {
 	public void addAdress(@Valid AddressForm addressForm, Long id) {
 		Address address = new Address();
 		address.setUserId(id);
+		address.setFirstName(addressForm.getInputFirstName());
+		address.setLastName(addressForm.getInputLastName());
 		address.setAddress1(addressForm.getInputAddress());
 		address.setAddress2(addressForm.getInputAddress2());
 		address.setCity(addressForm.getInputCity());

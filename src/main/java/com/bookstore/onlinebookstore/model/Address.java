@@ -20,6 +20,12 @@ public class Address {
 	private Long addressId;
 
 	@Column(nullable = false)
+	private String firstName;
+
+	@Column(nullable = false)
+	private String lastName;
+
+	@Column(nullable = false)
 	private Long userId;
 
 	@Column(nullable = false)
@@ -44,8 +50,10 @@ public class Address {
 	public Address() {
 	}
 
-	public Address(Long userId, String address1, String address2, String city, String state, String zip,
-			Date dateAdded) {
+	public Address(String firstName, String lastName, Long userId, String address1, String address2, String city,
+			String state, String zip, Date dateAdded) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.userId = userId;
 		this.address1 = address1;
 		this.address2 = address2;
@@ -55,7 +63,21 @@ public class Address {
 		this.dateAdded = dateAdded;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	public Long getAddressId() {
 		return addressId;
@@ -123,7 +145,8 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [addressId=" + addressId + ", userId=" + userId + ", address1=" + address1 + ", address2="
-				+ address2 + ", city=" + city + ", state=" + state + ", zip=" + zip + ", dateAdded=" + dateAdded + "]";
+		return "Address [addressId=" + addressId + ", firstName=" + firstName + ", lastName=" + lastName + ", userId="
+				+ userId + ", address1=" + address1 + ", address2=" + address2 + ", city=" + city + ", state=" + state
+				+ ", zip=" + zip + ", dateAdded=" + dateAdded + "]";
 	}
 }
