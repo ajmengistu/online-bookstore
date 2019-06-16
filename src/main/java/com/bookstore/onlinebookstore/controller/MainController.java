@@ -134,7 +134,7 @@ public class MainController {
 			Principal principal) {
 		User user = userRepo.findByEmail(principal.getName());
 		user.setPassword(null);
-		user.setId(null);
+		//user.setId(null);
 		modelMap.put("user", user);
 
 		System.out.println(user);
