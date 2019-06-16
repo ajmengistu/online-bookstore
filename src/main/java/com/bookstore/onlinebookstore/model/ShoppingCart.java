@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @IdClass(ShoppingCartId.class)
@@ -21,6 +23,7 @@ public class ShoppingCart {
 	@Column(updatable = true, nullable = false)
 	private Integer quantity;
 	@Column(updatable = true, nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 
 	public ShoppingCart() {

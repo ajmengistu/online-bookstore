@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "addresses")
@@ -13,19 +15,27 @@ public class Address {
 	@Id
 	@Column(nullable = false, updatable = true, unique = true)
 	private Long addressId;
+
 	@Column(nullable = false)
 	private Long userId;
+
 	@Column(nullable = false)
 	private String address1;
+
 	@Column(nullable = true)
 	private String address2;
+
 	@Column(nullable = false)
 	private String city;
+
 	@Column(nullable = false)
 	private String state;
+
 	@Column(nullable = false)
 	private String zip;
+
 	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateAdded;
 
 	public Address() {
@@ -104,5 +114,11 @@ public class Address {
 
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
+	}
+
+	@Override
+	public String toString() {
+		return "Address [addressId=" + addressId + ", userId=" + userId + ", address1=" + address1 + ", address2="
+				+ address2 + ", city=" + city + ", state=" + state + ", zip=" + zip + ", dateAdded=" + dateAdded + "]";
 	}
 }
