@@ -1,11 +1,32 @@
 package com.bookstore.onlinebookstore.model.forms;
 
 public class AddressForm {
+	private String inputFirstName;
+	private String inputLastName;
 	private String inputAddress;
 	private String inputAddress2;
 	private String inputCity;
 	private String inputState;
 	private String inputZip;
+
+	public AddressForm() {
+	}
+
+	public String getInputFirstName() {
+		return inputFirstName;
+	}
+
+	public void setInputFirstName(String inputFirstName) {
+		this.inputFirstName = inputFirstName;
+	}
+
+	public String getInputLastName() {
+		return inputLastName;
+	}
+
+	public void setInputLastName(String inputLastName) {
+		this.inputLastName = inputLastName;
+	}
 
 	public String getInputAddress() {
 		return inputAddress;
@@ -49,7 +70,8 @@ public class AddressForm {
 
 	@Override
 	public String toString() {
-		return "AddressForm [inputAddress=" + inputAddress + ", inputAddress2=" + inputAddress2 + ", inputCity="
-				+ inputCity + ", inputState=" + inputState + ", inputZip=" + inputZip + "]";
+		return "AddressForm [inputFirstName=" + inputFirstName + ", inputLastName=" + inputLastName + ", inputAddress="
+				+ inputAddress + ", inputAddress2=" + inputAddress2 + ", inputCity=" + inputCity + ", inputState="
+				+ inputState + ", inputZip=" + inputZip + "]";
 	}
 }
