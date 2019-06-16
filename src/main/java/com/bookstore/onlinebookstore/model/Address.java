@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -14,6 +16,7 @@ import javax.persistence.TemporalType;
 public class Address {
 	@Id
 	@Column(nullable = false, updatable = true, unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long addressId;
 
 	@Column(nullable = false)
@@ -41,16 +44,18 @@ public class Address {
 	public Address() {
 	}
 
-	public Address(Long addressId, Long userId, String address1, String address2, String city, String state,
-			String zip) {
-		this.addressId = addressId;
+	public Address(Long userId, String address1, String address2, String city, String state, String zip,
+			Date dateAdded) {
 		this.userId = userId;
 		this.address1 = address1;
 		this.address2 = address2;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.dateAdded = dateAdded;
 	}
+
+
 
 	public Long getAddressId() {
 		return addressId;

@@ -63,22 +63,25 @@
 					</div>
 					<div class="modal-body mx-3">
 						<div class="md-form mb-5">
-							<form th:action="@{/cart/address/add}" method="post">
+							<form th:action="@{/cart/address/add}" th:object="${addressForm}"
+								method="post">
 								<!-- <label for="inputEmail4"><strong>Full Name:</strong></label> <input
 								type="text" class="form-control" id="inputName"
 								placeholder="Name"> <br>  -->
 								<label for="inputAddress"><strong>Address 1:</strong></label> <input
-									required type="text" class="form-control" name="inputAddress"
-									placeholder="1234 Main St"> <br> <label
-									for="inputAddress2"><strong>Address 2:</strong></label> <input
-									required type="text" class="form-control" name="inputAddress2"
+									required type="text" class="form-control"
+									th:field="*{inputAddress}" placeholder="1234 Main St">
+								<br> <label for="inputAddress2"><strong>Address
+										2:</strong></label> <input type="text" class="form-control"
+									th:field="*{inputAddress2}"
 									placeholder="Apartment, studio, or floor"> <br> <label
 									for="inputCity"><strong>City:</strong></label> <input required
-									type="text" class="form-control" name="inputCity"> <br>
-								<label for="inputState"><strong>State:</strong></label> <input
-									required type="text" class="form-control" name="inputState">
-								<br> <label for="inputZip"><strong>ZIP:</strong></label> <input
-									required type="number" class="form-control" name="inputZip">
+									type="text" class="form-control" th:field="*{inputCity}">
+								<br> <label for="inputState"><strong>State:</strong></label>
+								<input required type="text" class="form-control"
+									th:field="*{inputState}"> <br> <label
+									for="inputZip"><strong>ZIP:</strong></label> <input required
+									type="number" class="form-control" th:field="*{inputZip}">
 
 								<div class="modal-footer d-flex justify-content-center"
 									style="margin-top: 50px;">
@@ -91,6 +94,6 @@
 			</div>
 		</div>
 	</th:block>
-	
+
 </body>
 </html>

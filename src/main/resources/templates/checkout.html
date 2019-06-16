@@ -28,14 +28,19 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<h6>Shipping Address</h6>
-				<th:block th:if="${userAddress != null}">
-				[[${session.user.firstName}]] [[${session.user.lastName}]]
-				<p>[[${userAddress}]]</p>
-					<button class="btn btn-primary" data-toggle="modal"
-						data-target="#updateAddressForm">Update address</button>
-					<a href="" data-toggle="modal" data-target="#updateAddressForm">Update
+				<h6>Shipping Address </h6>
+				<th:block th:if="${userAddress}">
+				[[${session.user.firstName}]] [[${session.user.lastName}]] <br>
+					[[${userAddress.address1}]]
+
+					<th:block th:if="${userAddress.address2}">
+				 [[${userAddress.address2}]]
+					</th:block>
+					<br> [[${userAddress.city}]], [[${userAddress.state}]] [[${userAddress.zip}]] <br>
+					United States	<br><br>			
+					<a  href="" data-toggle="modal" data-target="#updateAddressForm">Update
 						address</a>
+					
 				</th:block>
 				<th:block th:if="${userAddress == null}">
 					<button class="btn btn-primary mt-4" data-toggle="modal"

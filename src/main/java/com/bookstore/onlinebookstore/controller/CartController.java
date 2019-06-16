@@ -1,15 +1,18 @@
 package com.bookstore.onlinebookstore.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstore.onlinebookstore.model.User;
+import com.bookstore.onlinebookstore.model.forms.AddressForm;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.CartService;
 
@@ -52,7 +55,7 @@ public class CartController {
 
 	@RequestMapping("/checkout")
 	@PostMapping("/checkout")
-	public String checkoutCart(ModelMap modelMap, HttpServletRequest request) {
+	public String checkoutCart(ModelMap modelMap, HttpServletRequest request, AddressForm addressForm) {
 		// if shopping cart is empty redirect user to the home page
 		// mostly recently used shipping address
 		User user = (User) request.getSession().getAttribute("user");
@@ -61,13 +64,16 @@ public class CartController {
 	}
 
 	@PostMapping("/address/add")
-	public String addNewShippingAddress(ModelMap modelMap, HttpServletRequest request) {
-		System.out.println(request.getParameter("inputAddress"));
-		System.out.println(request.getParameter("inputAddress2"));
-		System.out.println(request.getParameter("inputCity"));
-		System.out.println(request.getParameter("inputState"));
-		System.out.println(request.getParameter("inputZip"));
-//		addressService.addNewAddress();
+	public String addNewShippingAddress(ModelMap modelMap, @Valid AddressForm addressForm, BindingResult bindingResult,
+			HttpServletRequest request) {
+		if (bindingResult.hasErrors()) {
+			System.out.println("--------------------------Error-----------------------------");
+			System.out.println(bindingResult.getFieldError());
+			return "/cart/checkout";
+		}
+		User user = (User) request.getSession().getAttribute("user");
+		addressService.addAdress(addressForm, user.getId());
+
 		return "redirect:/cart/checkout";
 	}
 }

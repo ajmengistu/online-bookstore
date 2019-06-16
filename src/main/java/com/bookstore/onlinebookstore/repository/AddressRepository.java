@@ -7,5 +7,5 @@ import com.bookstore.onlinebookstore.model.Address;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
-	public Address findByUserIdOrderByDateAddedDesc(Long userId);	
+	public Address findFirstByUserIdOrderByDateAddedDesc(Long userId);	
 }

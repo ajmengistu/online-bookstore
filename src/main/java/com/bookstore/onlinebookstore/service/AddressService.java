@@ -1,11 +1,16 @@
 package com.bookstore.onlinebookstore.service;
 
+import java.util.Date;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import com.bookstore.onlinebookstore.model.Address;
 import com.bookstore.onlinebookstore.model.Order;
+import com.bookstore.onlinebookstore.model.forms.AddressForm;
 import com.bookstore.onlinebookstore.repository.AddressRepository;
 
 @Service
@@ -18,11 +23,15 @@ public class AddressService {
 	public void getRecentlyUsedAddress(ModelMap modelMap, Long userId) {
 		Order order = orderService.getRecentlyUsedAddress(userId);
 		if (order == null) {
-			Address recentlyUsedAddress = addressRepository.findByUserIdOrderByDateAddedDesc(userId);
+			Address recentlyUsedAddress = addressRepository.findFirstByUserIdOrderByDateAddedDesc(userId);
 			System.out.println(recentlyUsedAddress);
-			modelMap.put("userAddress", null);
+			if (recentlyUsedAddress != null)
+				modelMap.put("userAddress", formatAddress(recentlyUsedAddress));
+			else
+				modelMap.put("userAddress", null);
 		} else {
-			Address recentlyAddedAddress = addressRepository.findByUserIdOrderByDateAddedDesc(order.getAddressId());
+			Address recentlyAddedAddress = addressRepository
+					.findFirstByUserIdOrderByDateAddedDesc(order.getAddressId());
 			System.out.println(recentlyAddedAddress);
 			modelMap.put("userAddress", formatAddress(recentlyAddedAddress));
 		}
@@ -32,8 +41,26 @@ public class AddressService {
 		return addressRepository.findById(addressId).get();
 	}
 
-	public String formatAddress(Address address) {
-		return address.getAddress1().toUpperCase() + "<br>" + address.getAddress2().toUpperCase()
-				+ address.getCity().toUpperCase() + ", " + address.getState().toUpperCase() + " " + address.getZip();
+	public Address formatAddress(Address address) {
+		address.setAddress1(address.getAddress1().toUpperCase());
+		address.setAddress2(address.getAddress2().toUpperCase());
+		address.setCity(address.getCity().toUpperCase());
+		address.setState(address.getState().toUpperCase());
+		address.setDateAdded(null);
+		address.setUserId(null);
+		address.setAddressId(null);
+		return address;
+	}
+
+	public void addAdress(@Valid AddressForm addressForm, Long id) {
+		Address address = new Address();
+		address.setUserId(id);
+		address.setAddress1(addressForm.getInputAddress());
+		address.setAddress2(addressForm.getInputAddress2());
+		address.setCity(addressForm.getInputCity());
+		address.setState(addressForm.getInputState());
+		address.setZip(addressForm.getInputZip());
+		address.setDateAdded(new Date());
+		addressRepository.save(address);
 	}
 }
