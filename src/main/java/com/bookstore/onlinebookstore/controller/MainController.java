@@ -19,13 +19,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookstore.onlinebookstore.model.Book;
+import com.bookstore.onlinebookstore.model.Cart;
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.model.enums.RoleType;
 import com.bookstore.onlinebookstore.repository.UserRepository;
 import com.bookstore.onlinebookstore.service.BookService;
+import com.bookstore.onlinebookstore.service.ShoppingCartService;
 
 @Controller
-@SessionAttributes({ "URL_REF", "user" })
+@SessionAttributes({ "URL_REF", "user", "cart"})
 public class MainController {
 	@Autowired
 	private UserRepository userRepo;
@@ -33,7 +35,8 @@ public class MainController {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private BookService bookService;
-
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 //	@Autowired
 //	private BookRepository bookRepository;
 
@@ -132,11 +135,15 @@ public class MainController {
 	@RequestMapping("/loginSuccessful")
 	public String userLoginSuccessful(@RequestParam String role, ModelMap modelMap, HttpServletRequest request,
 			Principal principal) {
+
 		User user = userRepo.findByEmail(principal.getName());
 		user.setPassword(null);
-		//user.setId(null);
+		// user.setId(null);
 		modelMap.put("user", user);
-
+		Cart cart = shoppingCartService.getSavedUserShoppingCart(user);
+		System.out.println("-------------------------------------");
+		System.out.println(cart);
+		modelMap.put("cart", cart);
 		System.out.println(user);
 
 		String url_ref = request.getSession().getAttribute("URL_REF").toString();

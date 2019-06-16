@@ -55,6 +55,10 @@ public class BookService {
 	public Book getBookById(String id) {
 		return bookRepository.findById(Long.parseLong(id)).get();
 	}
+	
+	public Book getBookById(Long id) {
+		return bookRepository.findById(id).get();
+	}
 
 	public List<Book> getBooksByAuthor(String author) {
 		return bookRepository.findTop25ByAuthorsContaining(author);
