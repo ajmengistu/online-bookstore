@@ -21,14 +21,18 @@
 					<div class="modal-body mx-3">
 						<div class="md-form mb-5">
 							<form th:action="@{/cart/address/update}" method="post">
-								<!-- <label for="inputEmail4"><strong>Full Name:</strong></label> <input
-								type="text" class="form-control" id="inputName"
-								placeholder="Name"> <br>  -->
-								<label for="inputAddress"><strong>Address 1:</strong></label> <input
-									required type="text" class="form-control" name="inputAddress"
-									placeholder="1234 Main St"> <br> <label
-									for="inputAddress2"><strong>Address 2:</strong></label> <input
-									required type="text" class="form-control" name="inputAddress2"
+								<label for="inputFirstName"><strong>First Name:</strong></label>
+								<input type="text" class="form-control" id="inputName"
+									 placeholder="Name" required> <br>
+								<label for="inputLastName"><strong>Last Name:</strong></label> <input
+									type="text" class="form-control" id="inputName"
+									 placeholder="Name" required> <br>
+								
+								 <label for="inputAddress"><strong>Address
+										1:</strong></label> <input required type="text" class="form-control"
+									name="inputAddress" placeholder="1234 Main St"> <br>
+								<label for="inputAddress2"><strong>Address 2:</strong></label> <input
+									 type="text" class="form-control" name="inputAddress2"
 									placeholder="Apartment, studio, or floor"> <br> <label
 									for="inputCity"><strong>City:</strong></label> <input required
 									type="text" class="form-control" name="inputCity"> <br>
@@ -65,9 +69,12 @@
 						<div class="md-form mb-5">
 							<form th:action="@{/cart/address/add}" th:object="${addressForm}"
 								method="post">
-								<!-- <label for="inputEmail4"><strong>Full Name:</strong></label> <input
-								type="text" class="form-control" id="inputName"
-								placeholder="Name"> <br>  -->
+								<label for="inputFirstName"><strong>First Name:</strong></label>
+								<input type="text" class="form-control" id="inputName"
+									th:field="*{inputFirstName}" placeholder="Name" required> <br>
+								<label for="inputLastName"><strong>Last Name:</strong></label> <input
+									type="text" class="form-control" id="inputName"
+									th:field="*{inputLastName}" placeholder="Name" required> <br>
 								<label for="inputAddress"><strong>Address 1:</strong></label> <input
 									required type="text" class="form-control"
 									th:field="*{inputAddress}" placeholder="1234 Main St">
