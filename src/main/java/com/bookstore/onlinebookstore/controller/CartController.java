@@ -56,7 +56,18 @@ public class CartController {
 		// if shopping cart is empty redirect user to the home page
 		// mostly recently used shipping address
 		User user = (User) request.getSession().getAttribute("user");
-		addressService.getRecentlyUsedAddress(modelMap, user.getId());	
+		addressService.getRecentlyUsedAddress(modelMap, user.getId());
 		return "checkout";
+	}
+
+	@PostMapping("/address/add")
+	public String addNewShippingAddress(ModelMap modelMap, HttpServletRequest request) {
+		System.out.println(request.getParameter("inputAddress"));
+		System.out.println(request.getParameter("inputAddress2"));
+		System.out.println(request.getParameter("inputCity"));
+		System.out.println(request.getParameter("inputState"));
+		System.out.println(request.getParameter("inputZip"));
+//		addressService.addNewAddress();
+		return "redirect:/cart/checkout";
 	}
 }
