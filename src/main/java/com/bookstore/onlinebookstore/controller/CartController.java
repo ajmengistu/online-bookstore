@@ -50,6 +50,7 @@ public class CartController {
 	@PostMapping("/checkout")
 	public String checkoutCart() {
 		// if shopping cart is empty redirect user to the home page
+		// mostly recently used shipping address
 		return "checkout";
 	}
 }

@@ -1,5 +1,7 @@
 package com.bookstore.onlinebookstore.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,6 +25,8 @@ public class Address {
 	private String state;
 	@Column(nullable = false)
 	private String zip;
+	@Column(nullable = false)
+	private Date dateAdded;
 
 	public Address() {
 	}
@@ -92,5 +96,13 @@ public class Address {
 
 	public void setZip(String zip) {
 		this.zip = zip;
+	}
+
+	public Date getDateAdded() {
+		return dateAdded;
+	}
+
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 }
