@@ -1,6 +1,8 @@
 package com.bookstore.onlinebookstore.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,11 @@ public class Cart {
 	public boolean addItem(Item item) {
 		return shoppingCart.add(item);
 	}
-	
+
+	public String getEstimatedDeliveryDate() {
+		return LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy")).toString();
+	}
+
 	public BigDecimal getTotalCost() {
 		return getSubTotal().add(getShippingCost());
 	}

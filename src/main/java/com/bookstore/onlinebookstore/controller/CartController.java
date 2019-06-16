@@ -18,6 +18,17 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 
+	/*
+	 * ******* Generate a BrainTreeGateway token for payment transaction ******
+	 * 
+	 * @RequestMapping(value = "/cart/braintree/cltoken", method =
+	 * RequestMethod.POST, produces = "application/json") public @ResponseBody
+	 * Map<String, String> getClientToken() { BraintreeGateway gateway =
+	 * processPaymentService.getBrainTreeGateway(); ClientTokenRequest
+	 * clientTokenRequest = new ClientTokenRequest(); String clientToken =
+	 * gateway.clientToken().generate(clientTokenRequest); HashMap<String, String>
+	 * map = new HashMap<>(); map.put("clientToken", clientToken); return map; }
+	 */
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
 		cartService.addItemToCart(modelMap, request);
@@ -37,7 +48,8 @@ public class CartController {
 
 	@RequestMapping("/checkout")
 	@PostMapping("/checkout")
-	public String checkoutCart() {		
+	public String checkoutCart() {
+		// if shopping cart is empty redirect user to the home page
 		return "checkout";
 	}
 }
