@@ -11,5 +11,5 @@ import com.bookstore.onlinebookstore.model.ShoppingCartId;
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, ShoppingCartId>{
 	public ShoppingCart findByUserIdAndBookId(Long userId, Long bookId);
-	public List<ShoppingCart> findByUserId(Long userId);
+	public List<ShoppingCart> findByUserIdOrderByDateCreatedAsc(Long userId);
 }

@@ -41,7 +41,7 @@ public class ShoppingCartService {
 	}
 
 	public Cart getSavedUserShoppingCart(User user) {
-		List<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserId(user.getId());
+		List<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserIdOrderByDateCreatedAsc(user.getId());
 		Cart cart = new Cart();
 		
 		for (ShoppingCart sc : shoppingCart) {
