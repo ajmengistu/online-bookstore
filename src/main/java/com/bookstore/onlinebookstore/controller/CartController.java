@@ -1,5 +1,7 @@
 package com.bookstore.onlinebookstore.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -9,12 +11,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.model.forms.AddressForm;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.CartService;
+import com.bookstore.onlinebookstore.service.PaymentService;
 
 @Controller
 @RequestMapping("/cart")
@@ -24,18 +29,10 @@ public class CartController {
 	private CartService cartService;
 	@Autowired
 	private AddressService addressService;
+	@Autowired
+	private PaymentService paymentService;
 
-	/*
-	 * ******* Generate a BrainTreeGateway token for payment transaction ******
-	 * 
-	 * @RequestMapping(value = "/cart/braintree/cltoken", method =
-	 * RequestMethod.POST, produces = "application/json") public @ResponseBody
-	 * Map<String, String> getClientToken() { BraintreeGateway gateway =
-	 * processPaymentService.getBrainTreeGateway(); ClientTokenRequest
-	 * clientTokenRequest = new ClientTokenRequest(); String clientToken =
-	 * gateway.clientToken().generate(clientTokenRequest); HashMap<String, String>
-	 * map = new HashMap<>(); map.put("clientToken", clientToken); return map; }
-	 */
+	
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
 		cartService.addItemToCart(modelMap, request);
@@ -63,6 +60,13 @@ public class CartController {
 		return "checkout";
 	}
 
+	/* ******* Generate a BrainTreeGateway token for payment transaction ****** */
+	@RequestMapping(value = "/payment/token", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody Map<String, String> getClientToken() {		
+		return paymentService.getClientToken();
+	}
+
+	
 	@PostMapping("/address/add")
 	public String addNewShippingAddress(ModelMap modelMap, @Valid AddressForm addressForm, BindingResult bindingResult,
 			HttpServletRequest request) {
