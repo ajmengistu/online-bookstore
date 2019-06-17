@@ -83,10 +83,12 @@ public class CartController {
 		if (bindingResult.hasErrors()) {
 			System.out.println("--------------------------Error-----------------------------");
 			System.out.println(bindingResult.getFieldError());
-			return "/cart/checkout";
+			return "redirect:/cart/checkout";
 		}
 		User user = (User) request.getSession().getAttribute("user");
 		addressService.updateAddress(addressForm, user.getId());
 		return "redirect:/cart/checkout";
 	}
+
+	// @PostMapping("/place-order")
 }
