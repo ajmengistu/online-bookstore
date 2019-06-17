@@ -15,7 +15,7 @@
 				th:href="@{/}" style="color: inherit; text-decoration: none;"><b>Online</b>BookStore</a></span>
 		</nav>
 	</div>
-	<div class="container mt-4">
+	<div class="container mt-4 mb-4">
 		<h3>Review your order</h3>
 	</div>
 
@@ -57,7 +57,7 @@
 				<br>
 				<!-- Set up a container element for the button -->
 				<div class="container">
-					<form id="placeOrder" method="post" action="">
+					<form id="placeOrder" method="post" th:action="{/cart/place-order}">
 						<div id="payment-form"></div>
 					</form>
 				</div>
@@ -108,31 +108,27 @@
 				<div class="card card-body bg-light">
 					<table class="table">
 						<thead>
-							<tr style="text-align: center;">
-								<th style="width: 10%">Product</th>
-								<th style="width: 35%"></th>
-								<th style="width: 8%">Price</th>
-								<th style="width: 50%">Quantity</th>
+							<tr style="text-align: left;">
+								<th>Product</th>
+								<th></th>
+								<th>Price</th>
+								<th>Quantity</th>
 							</tr>
 						</thead>
 						<tbody>
 							<th:block th:each="item : ${session.cart.shoppingCart}">
 								<tr>
 									<td><img th:src="${item.getBook().image}" alt="img"
-										style="height: 150px; width: 90px; margin-left: 20px;"></td>
-									<td><span class="badge badge-success"
-										style="margin-bottom: 15px;">In Stock</span><br> <a
-										style="font-size: 15px; font-weight: bold">[[${item.getBook().title}]]</a>
-										<p>by [[${item.getBook().authors}]]</p>
-										<p style="color: rgb(236, 74, 74); font-weight: bold;">$[[${item.getBook().price}]]</p>
-										<p>
-											<span style="font-weight: bold;">Quantity: </span>[[${item.getQuantity()}]]
-										</p></td>
+										style="height: 150px; width: 90px;"></td>
+									<td><span class="badge badge-success" style="">In
+											Stock</span><br> <span
+										style="font-size: 15px; font-weight: bold">
+											[[${item.getBook().title}]] </span> <br>by
+										[[${item.getBook().authors}]]</td>
+									<td style="color: rgb(236, 74, 74); font-weight: bold;">$[[${item.getBook().price}]]</td>
+									<td>[[${item.getQuantity()}]]</td>
 								</tr>
-
 							</th:block>
-
-
 						</tbody>
 					</table>
 				</div>
