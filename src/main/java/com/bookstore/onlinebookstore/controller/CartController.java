@@ -61,11 +61,11 @@ public class CartController {
 	}
 
 	/* ******* Generate a BrainTreeGateway token for payment transaction ****** */
-	@RequestMapping(value = "/payment/token", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody Map<String, String> getClientToken() {		
+	@RequestMapping(value = "/payment/token", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Map<String, String> getClientToken() {
+		System.out.println(paymentService.getClientToken().get("clientToken"));
 		return paymentService.getClientToken();
 	}
-
 	
 	@PostMapping("/address/add")
 	public String addNewShippingAddress(ModelMap modelMap, @Valid AddressForm addressForm, BindingResult bindingResult,

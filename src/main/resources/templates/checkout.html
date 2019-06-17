@@ -28,7 +28,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<h6>Shipping Address </h6>
+				<h6>Shipping Address</h6>
 				<th:block th:if="${userAddress}">
 				[[${userAddress.firstName}]] [[${userAddress.lastName}]] <br>
 					[[${userAddress.address1}]]
@@ -37,10 +37,11 @@
 				 [[${userAddress.address2}]]
 					</th:block>
 					<br> [[${userAddress.city}]], [[${userAddress.state}]] [[${userAddress.zip}]] <br>
-					United States	<br><br>			
-					<a  href="" data-toggle="modal" data-target="#updateAddressForm">Update
+					United States	<br>
+					<br>
+					<a href="" data-toggle="modal" data-target="#updateAddressForm">Update
 						address</a>
-					
+
 				</th:block>
 				<th:block th:if="${userAddress == null}">
 					<button class="btn btn-primary mt-4" data-toggle="modal"
@@ -115,8 +116,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							<!-- <c:set var="count" value="0" scope="page" />
-							<c:forEach items="${shoppingCart}" var="item"> -->
 							<th:block th:each="item : ${session.cart.shoppingCart}">
 								<tr>
 									<td><img th:src="${item.getBook().image}" alt="img"
@@ -130,8 +129,7 @@
 											<span style="font-weight: bold;">Quantity: </span>[[${item.getQuantity()}]]
 										</p></td>
 								</tr>
-								<!-- <c:set var="count" value="${count + 1}" scope="page" />
-							</c:forEach> -->
+
 							</th:block>
 
 
@@ -141,10 +139,12 @@
 			</div>
 		</div>
 	</div>
-
-
 	<th:block
 		th:insert="fragments/bootstrap-starter-template.html :: bootstrap-scripts"></th:block>
+	<th:block
+		th:insert="fragments/braintree-client-token-ajax-call :: braintree-client-token">
+	</th:block>
+
 	<th:block th:insert="fragments/footer.html :: footer"></th:block>
 </body>
 </html>
