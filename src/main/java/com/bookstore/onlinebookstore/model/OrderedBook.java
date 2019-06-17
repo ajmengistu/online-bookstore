@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "ordered_books")
-public class OrderedBooks {
+public class OrderedBook {
 	@Id
 	@Column(nullable = false, updatable = true, unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,10 @@ public class OrderedBooks {
 	@Column(nullable = false)
 	private Date dateCreated;
 
-	public OrderedBooks() {
+	public OrderedBook() {
 	}
 
-	public OrderedBooks(Long orderedBooksId, Long orderId, Long bookId, Integer quantity, Date dateCreated) {
+	public OrderedBook(Long orderedBooksId, Long orderId, Long bookId, Integer quantity, Date dateCreated) {
 		this.orderedBooksId = orderedBooksId;
 		this.orderId = orderId;
 		this.bookId = bookId;

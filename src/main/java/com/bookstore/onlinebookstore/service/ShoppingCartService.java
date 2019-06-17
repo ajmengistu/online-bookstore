@@ -51,4 +51,8 @@ public class ShoppingCartService {
 		}
 		return cart;
 	}
+
+	public void clearUserCart() {	
+		shoppingCartRepository.deleteAll();
+	}
 }

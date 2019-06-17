@@ -23,7 +23,9 @@ import com.bookstore.onlinebookstore.model.forms.AddressForm;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.CartService;
 import com.bookstore.onlinebookstore.service.OrderService;
+import com.bookstore.onlinebookstore.service.OrderedBookService;
 import com.bookstore.onlinebookstore.service.PaymentService;
+import com.bookstore.onlinebookstore.service.ShoppingCartService;
 
 @Controller
 @RequestMapping("/cart")
@@ -37,6 +39,10 @@ public class CartController {
 	private PaymentService paymentService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private OrderedBookService orderedBookService;
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
@@ -104,11 +110,15 @@ public class CartController {
 			HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		Cart cart = (Cart) modelMap.get("cart");
-//		System.out.println(cart.getShoppingCart());
-//		System.out.println(paymentMethodNonce);
-//		System.out.println(request.getSession().getAttribute("userAddress"));
+
 		Address address = (Address) request.getSession().getAttribute("userAddress");
-		orderService.placeOrder(modelMap, user.getId(), cart.getTotalCost(), address.getAddressId());
+		Long orderId = orderService.placeOrder(modelMap, user.getId(), cart.getTotalCost(), address.getAddressId());
+		orderedBookService.insert(cart, orderId);
+//		shoppingCartService.clearUserCart();
+//		modelMap.put("cart", null);
+//		paymentService.makePayment(orderId, cart.getTotalCost(),
+//				request.getSession().getAttribute("payment_method_nonce").toString());
+		
 		return "order-details";
 	}
 }
