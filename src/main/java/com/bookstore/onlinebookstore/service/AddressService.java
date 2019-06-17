@@ -46,7 +46,7 @@ public class AddressService {
 		address.setState(address.getState().toUpperCase());
 		address.setDateAdded(null);
 		address.setUserId(null);
-		address.setAddressId(null);
+//		address.setAddressId(null);
 		return address;
 	}
 

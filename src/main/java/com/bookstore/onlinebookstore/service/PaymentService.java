@@ -28,7 +28,6 @@ public class PaymentService {
 		String clientToken = gateway.clientToken().generate(clientTokenRequest);
 		HashMap<String, String> map = new HashMap<>();
 		map.put("clientToken", clientToken);
-		System.out.println("pas: " + clientToken);
 		return map;
 	}
 }

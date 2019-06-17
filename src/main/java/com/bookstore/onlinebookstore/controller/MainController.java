@@ -135,16 +135,13 @@ public class MainController {
 	@RequestMapping("/loginSuccessful")
 	public String userLoginSuccessful(@RequestParam String role, ModelMap modelMap, HttpServletRequest request,
 			Principal principal) {
-
 		User user = userRepo.findByEmail(principal.getName());
 		user.setPassword(null);
-		// user.setId(null);
+
 		modelMap.put("user", user);
 		Cart cart = shoppingCartService.getSavedUserShoppingCart(user);
-		System.out.println("-------------------------------------");
-		System.out.println(cart);
+		
 		modelMap.put("cart", cart);
-		System.out.println(user);
 
 		String url_ref = request.getSession().getAttribute("URL_REF").toString();
 		String url = null;
@@ -153,7 +150,8 @@ public class MainController {
 			url = "redirect:/cart/checkout";
 		} else {
 			System.out.println("hello: " + url_ref);
-			url = "redirect:/account";
+//			url = "redirect:/account";
+			url = "redirect:/cart/checkout";
 		}
 		return url;
 	}

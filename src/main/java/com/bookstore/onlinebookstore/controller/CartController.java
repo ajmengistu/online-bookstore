@@ -12,18 +12,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.bookstore.onlinebookstore.model.Address;
+import com.bookstore.onlinebookstore.model.Cart;
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.model.forms.AddressForm;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.CartService;
+import com.bookstore.onlinebookstore.service.OrderService;
 import com.bookstore.onlinebookstore.service.PaymentService;
 
 @Controller
 @RequestMapping("/cart")
-@SessionAttributes({ "cart" })
+@SessionAttributes({ "cart", "userAddress" })
 public class CartController {
 	@Autowired
 	private CartService cartService;
@@ -31,8 +35,9 @@ public class CartController {
 	private AddressService addressService;
 	@Autowired
 	private PaymentService paymentService;
+	@Autowired
+	private OrderService orderService;
 
-	
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
 		cartService.addItemToCart(modelMap, request);
@@ -63,15 +68,15 @@ public class CartController {
 	/* ******* Generate a BrainTreeGateway token for payment transaction ****** */
 	@RequestMapping(value = "/payment/token", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Map<String, String> getClientToken() {
-		System.out.println(paymentService.getClientToken().get("clientToken"));
 		return paymentService.getClientToken();
 	}
-	
+
 	@PostMapping("/address/add")
 	public String addNewShippingAddress(ModelMap modelMap, @Valid AddressForm addressForm, BindingResult bindingResult,
 			HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("--------------------------Error-----------------------------");
+			System.out.println(
+					"--------------------------Error: Adding New Shipping Address-----------------------------");
 			System.out.println(bindingResult.getFieldError());
 			return "/cart/checkout";
 		}
@@ -85,7 +90,7 @@ public class CartController {
 	public String updateShippingAddress(ModelMap modelMap, @Valid AddressForm addressForm, BindingResult bindingResult,
 			HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("--------------------------Error-----------------------------");
+			System.out.println("--------------------------Error: Update Shipping Address-----------------------------");
 			System.out.println(bindingResult.getFieldError());
 			return "redirect:/cart/checkout";
 		}
@@ -94,5 +99,16 @@ public class CartController {
 		return "redirect:/cart/checkout";
 	}
 
-	// @PostMapping("/place-order")
+	@PostMapping("/place-order")
+	public String placeOrder(@RequestParam("payment_method_nonce") String paymentMethodNonce, ModelMap modelMap,
+			HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		Cart cart = (Cart) modelMap.get("cart");
+//		System.out.println(cart.getShoppingCart());
+//		System.out.println(paymentMethodNonce);
+//		System.out.println(request.getSession().getAttribute("userAddress"));
+		Address address = (Address) request.getSession().getAttribute("userAddress");
+		orderService.placeOrder(modelMap, user.getId(), cart.getTotalCost(), address.getAddressId());
+		return "order-details";
+	}
 }

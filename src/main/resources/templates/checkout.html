@@ -44,7 +44,7 @@
 
 				</th:block>
 				<th:block th:if="${userAddress == null}">
-					<button class="btn btn-primary mt-4" data-toggle="modal"
+					<button class="btn btn-warning mt-4" data-toggle="modal"
 						data-target="#addShippingAddress">Add shipping address</button>
 					<a href=""></a>
 				</th:block>
@@ -57,7 +57,7 @@
 				<br>
 				<!-- Set up a container element for the button -->
 				<div class="container">
-					<form id="placeOrder" method="post" th:action="{/cart/place-order}">
+					<form id="placeOrder" method="post" th:action="@{/cart/place-order}">
 						<div id="payment-form"></div>
 					</form>
 				</div>

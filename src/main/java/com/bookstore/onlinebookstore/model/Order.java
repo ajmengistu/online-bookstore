@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,22 +17,23 @@ import javax.persistence.TemporalType;
 public class Order {
 	@Id
 	@Column(nullable = false, updatable = true, unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
 	@Column(nullable = false)
 	private String hash;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private BigDecimal total;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOrdered;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private Long addressId;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private Long userId;
 
 	public Order() {
