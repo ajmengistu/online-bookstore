@@ -32,24 +32,34 @@ public class CustomerController {
 			// if orderId is null & order-details is requested send them to order-history
 			// page
 			if (modelMap.get("orderId") != null) {
-				// send user to order-history
+				return "redirect:/account/order-history";
 			}
 			System.out.println(modelMap.get("orderId"));
-			Order order = orderService.getOrderByHash(orderID);
-			System.out.println(order);
-			modelMap.put("orderedDate", orderService.formatDate(order.getDateOrdered()));
-			modelMap.put("order", order);
+			String hash = orderID;
+			Order order = orderService.getOrderByHash(hash);
+			if (order != null) {
+				System.out.println(order);
+				modelMap.put("orderedDate", orderService.formatDate(order.getDateOrdered()));
+				modelMap.put("order", order);
 
-			Address address = addressService.getAddressById(order.getAddressId());
-			modelMap.put("userAddress", address);
-			List<Item> orderedBooks = orderedBookService.getOrderedBooksByOrderId(order.getOrderId());
-			System.out.println(orderedBooks);
-			modelMap.put("orderedBooks", orderedBooks);
-			modelMap.put("totalItemsOrdered", orderedBookService.getTotalQuantity(orderedBooks));
-			
-			System.out.println(address);
+				Address address = addressService.getAddressById(order.getAddressId());
+				modelMap.put("userAddress", address);
+				List<Item> orderedBooks = orderedBookService.getOrderedBooksByOrderId(order.getOrderId());
+				System.out.println(orderedBooks);
+				modelMap.put("orderedBooks", orderedBooks);
+				modelMap.put("totalItemsOrdered", orderedBookService.getTotalQuantity(orderedBooks));
+
+				System.out.println(address);
+			} else {
+				return "redirect:/account/order-history";
+			}
 		}
 		return "order-details";
+	}
+
+	@RequestMapping("/order-details")
+	public String getOrderDetails(ModelMap modelMap) {
+		return "redirect:/account/order-history";
 	}
 
 	@RequestMapping("/order-history")
