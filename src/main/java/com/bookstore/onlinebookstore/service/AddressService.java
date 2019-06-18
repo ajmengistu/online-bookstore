@@ -20,6 +20,7 @@ public class AddressService {
 
 	public void getRecentlyUsedAddress(ModelMap modelMap, Long userId) {
 		Order order = orderService.getRecentlyUsedAddress(userId);
+	
 		if (order == null) {
 			Address recentlyUsedAddress = addressRepository.findFirstByUserIdOrderByDateAddedDesc(userId);
 			System.out.println(recentlyUsedAddress);
@@ -28,9 +29,8 @@ public class AddressService {
 			else
 				modelMap.put("userAddress", null);
 		} else {
-			Address recentlyAddedAddress = addressRepository
-					.findFirstByUserIdOrderByDateAddedDesc(order.getAddressId());
-			System.out.println(recentlyAddedAddress);
+			Address recentlyAddedAddress = addressRepository.findById(order.getAddressId()).get();
+			
 			modelMap.put("userAddress", formatAddress(recentlyAddedAddress));
 		}
 	}
@@ -39,9 +39,11 @@ public class AddressService {
 		return addressRepository.findById(addressId).get();
 	}
 
-	public Address formatAddress(Address address) {
+	public Address formatAddress(Address address) {		
 		address.setAddress1(address.getAddress1().toUpperCase());
-		address.setAddress2(address.getAddress2().toUpperCase());
+		if (address.getAddress2() != null) {
+			address.setAddress2(address.getAddress2().toUpperCase());
+		}
 		address.setCity(address.getCity().toUpperCase());
 		address.setState(address.getState().toUpperCase());
 		address.setDateAdded(null);
