@@ -3,7 +3,6 @@ package com.bookstore.onlinebookstore.service;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -66,6 +65,10 @@ public class OrderService {
 	public Order getOrderByHash(String orderID) {
 		return orderRepository.findFirstByHash(orderID);
 
+	}
+
+	public Order getOrderByHashAndByUserId(String hash, Long userId) {
+		return orderRepository.findFirstByHashAndUserId(hash, userId);
 	}
 
 }

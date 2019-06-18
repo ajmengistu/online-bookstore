@@ -43,7 +43,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/login").permitAll()
 			.antMatchers("/register").permitAll()
 			.antMatchers("/test").permitAll()
-			.antMatchers("/account", "/cart/checkout").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
+			.antMatchers("/account", "/cart/checkout", "/account/order-details", "/account/order-history").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
 			.antMatchers("/admin").hasAuthority(RoleType.ADMIN.toString())
 //			.antMatchers("/cart/checkout").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
 			.and()

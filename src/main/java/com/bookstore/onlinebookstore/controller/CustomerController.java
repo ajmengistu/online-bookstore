@@ -1,6 +1,9 @@
 package com.bookstore.onlinebookstore.controller;
 
+import java.security.Principal;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bookstore.onlinebookstore.model.Address;
 import com.bookstore.onlinebookstore.model.Item;
 import com.bookstore.onlinebookstore.model.Order;
+import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.OrderService;
 import com.bookstore.onlinebookstore.service.OrderedBookService;
@@ -26,18 +30,15 @@ public class CustomerController {
 	private OrderedBookService orderedBookService;
 
 	@RequestMapping("/order-details")
-	public String getOrderDetails(@RequestParam String orderID, ModelMap modelMap) {
+	public String getOrderDetails(@RequestParam String orderID, ModelMap modelMap, HttpServletRequest request,
+			Principal principal) {
 		if (orderID != null) {
 			System.out.println(orderID);
-			// if orderId is null & order-details is requested send them to order-history
-			// page
-			if (modelMap.get("orderId") != null) {
-				return "redirect:/account/order-history";
-			}
-			System.out.println(modelMap.get("orderId"));
 			String hash = orderID;
-			Order order = orderService.getOrderByHash(hash);
+			User user = (User) request.getSession().getAttribute("user");
+			Order order = orderService.getOrderByHashAndByUserId(hash, user.getId());
 			if (order != null) {
+
 				System.out.println(order);
 				modelMap.put("orderedDate", orderService.formatDate(order.getDateOrdered()));
 				modelMap.put("order", order);
@@ -50,6 +51,7 @@ public class CustomerController {
 				modelMap.put("totalItemsOrdered", orderedBookService.getTotalQuantity(orderedBooks));
 
 				System.out.println(address);
+
 			} else {
 				return "redirect:/account/order-history";
 			}
@@ -57,10 +59,10 @@ public class CustomerController {
 		return "order-details";
 	}
 
-	@RequestMapping("/order-details")
-	public String getOrderDetails(ModelMap modelMap) {
-		return "redirect:/account/order-history";
-	}
+	/*
+	 * @RequestMapping("/order-details") public String getOrderDetails(ModelMap
+	 * modelMap) { return "redirect:/account/order-history"; }
+	 */
 
 	@RequestMapping("/order-history")
 	public String getOrderHistory() {

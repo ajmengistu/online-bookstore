@@ -120,7 +120,6 @@ public class CartController {
 			orderService.updatePayed(orderId);
 			orderedBookService.insert(cart, orderId);
 			shoppingCartService.clearUserCart(user.getId(), cart, request, modelMap);
-//		hash
 			redirectAttr.addFlashAttribute("orderId", orderId);
 			String hash = orderService.getOrderHash(orderId);
 			return "redirect:/account/order-details?orderID=" + hash;
