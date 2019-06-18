@@ -113,12 +113,14 @@ public class CartController {
 
 		Address address = (Address) request.getSession().getAttribute("userAddress");
 		Long orderId = orderService.placeOrder(modelMap, user.getId(), cart.getTotalCost(), address.getAddressId());
-		orderedBookService.insert(cart, orderId);
-//		shoppingCartService.clearUserCart();
-//		modelMap.put("cart", null);
-//		paymentService.makePayment(orderId, cart.getTotalCost(),
-//				request.getSession().getAttribute("payment_method_nonce").toString());
-		
+
+		Boolean paymentSuccessful = paymentService.makePayment(orderId, cart.getTotalCost(), paymentMethodNonce);
+		if (paymentSuccessful) {
+			orderService.updatePayed(orderId);
+			orderedBookService.insert(cart, orderId);
+			shoppingCartService.clearUserCart(user.getId(), cart, request, modelMap);
+		}
+
 		return "order-details";
 	}
 }

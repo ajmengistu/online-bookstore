@@ -57,7 +57,8 @@
 				<br>
 				<!-- Set up a container element for the button -->
 				<div class="container">
-					<form id="placeOrder" method="post" th:action="@{/cart/place-order}">
+					<form id="placeOrder" method="post"
+						th:action="@{/cart/place-order}">
 						<div id="payment-form"></div>
 					</form>
 				</div>
@@ -89,8 +90,13 @@
 							</tr>
 						</tbody>
 					</table>
-					<input class="btn btn-warning" type="submit" value="Place order"
-						form="placeOrder"> <br>
+
+					<th:block th:if="${userAddress}">
+						<input class="btn btn-warning" type="submit" value="Place order"
+							form="placeOrder">
+					</th:block>
+
+					<br>
 				</div>
 			</div>
 		</div>

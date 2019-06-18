@@ -7,6 +7,6 @@ import com.bookstore.onlinebookstore.model.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-	public Order findByUserIdOrderByDateOrderedDesc(Long userId);
+	public Order findFirstByUserIdOrderByDateOrderedDesc(Long userId);
 	public Order findFirstByOrderByOrderIdDesc();
 }

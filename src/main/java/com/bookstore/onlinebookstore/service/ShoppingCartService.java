@@ -3,8 +3,11 @@ package com.bookstore.onlinebookstore.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.Cart;
@@ -43,7 +46,7 @@ public class ShoppingCartService {
 	public Cart getSavedUserShoppingCart(User user) {
 		List<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserIdOrderByDateCreatedAsc(user.getId());
 		Cart cart = new Cart();
-		
+
 		for (ShoppingCart sc : shoppingCart) {
 			Book book = bookService.getBookById(sc.getBookId());
 			Item item = new Item(book, sc.getQuantity());
@@ -52,7 +55,19 @@ public class ShoppingCartService {
 		return cart;
 	}
 
-	public void clearUserCart() {	
-		shoppingCartRepository.deleteAll();
+	public void clearCartInDatabase(Long userId) {
+		List<ShoppingCart> list = shoppingCartRepository.findAllByUserId(userId);
+		System.out.println("clearCartdb: " + list);
+		for (ShoppingCart item : list) {
+			shoppingCartRepository.delete(item);
+		}
+
+	}
+
+	public void clearUserCart(Long userId, Cart cart, HttpServletRequest request, ModelMap modelMap) {
+		clearCartInDatabase(userId);
+		request.getSession().setAttribute("cart", new Cart());
+		modelMap.put("cart", new Cart());
+
 	}
 }

@@ -36,16 +36,22 @@ public class Order {
 	@Column(nullable = false)
 	private Long userId;
 
+
+	@Column(nullable = false, updatable = true, columnDefinition = "boolean default false")
+	private Boolean payed = false;
+
 	public Order() {
 	}
 
-	public Order(Long orderId, String hash, BigDecimal total, Date dateOrdered, Long addressId, Long userId) {
+	public Order(Long orderId, String hash, BigDecimal total, Date dateOrdered, Long addressId, Long userId,
+			Boolean payed) {
 		this.orderId = orderId;
 		this.hash = hash;
 		this.total = total;
 		this.dateOrdered = dateOrdered;
 		this.addressId = addressId;
 		this.userId = userId;
+		this.payed = payed;
 	}
 
 	public Long getOrderId() {
@@ -96,9 +102,17 @@ public class Order {
 		this.userId = userId;
 	}
 
+	public Boolean getPayed() {
+		return payed;
+	}
+
+	public void setPayed(Boolean payed) {
+		this.payed = payed;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", hash=" + hash + ", total=" + total + ", dateOrdered=" + dateOrdered
-				+ ", addressId=" + addressId + ", userId=" + userId + "]";
+				+ ", addressId=" + addressId + ", userId=" + userId + ", payed=" + payed + "]";
 	}
 }

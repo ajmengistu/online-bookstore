@@ -17,7 +17,7 @@ public class OrderService {
 	private OrderRepository orderRepository;
 
 	public Order getRecentlyUsedAddress(Long userId) {
-		return orderRepository.findByUserIdOrderByDateOrderedDesc(userId);
+		return orderRepository.findFirstByUserIdOrderByDateOrderedDesc(userId);
 	}
 
 	public void insertOrder(ModelMap modelMap, Long userId, BigDecimal totalCost, Long addressId) {
@@ -37,6 +37,12 @@ public class OrderService {
 
 	public String getOrderNumberHash() {
 		return UUID.randomUUID().toString();
+	}
+
+	public void updatePayed(Long orderId) {
+		Order order = orderRepository.findById(orderId).get();
+		order.setPayed(true);
+		orderRepository.save(order);
 	}
 
 }
