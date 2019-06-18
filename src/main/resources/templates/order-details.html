@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title></title>
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
 </head>
 <body>
-<h1>Order Details</h1>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+
+	<div class="container mt-4">
+		<h3>Order Details</h3>
+		<br>
+		<p style="font-size: 20px;">
+			Ordered on <span style="font-weight: bold;">[[${orderedDate}]]</span>
+			&nbsp; |&nbsp; Order#: <span style="font-weight: bold;">[[${order.hash}]]
+			</span>
+		</p>
+		<hr>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<h6>Shipping Address</h6>
+				<th:block th:if="${userAddress}">
+				[[${userAddress.firstName}]] [[${userAddress.lastName}]] <br>
+					[[${userAddress.address1}]]
+
+					<th:block th:if="${userAddress.address2}">
+				 [[${userAddress.address2}]]
+					</th:block>
+					<br> [[${userAddress.city}]], [[${userAddress.state}]] [[${userAddress.zip}]] <br>
+					United States	<br>
+					<br>
+			</div>
+			<div class="col-md-4">
+				<div class="card card-body bg-white">
+					<h6 style="font-weight: bold;">Order Summary</h6>
+					<table class="table borderless">
+						<tbody>
+							<tr>
+								<td>Items ([[${totalItemsOrdered}]]):</td>
+								<td style="">$[[${order.total-5.99}]]</td>
+
+
+							</tr>
+							<tr>
+								<td><span>Shipping &#38; handling:</span></td>
+								<td style="">$5.99</td>
+
+							</tr>
+							<tr style="background-color: #ccffb3; margin-top: 10%;">
+								<td style="font-weight: bold; font-size: 15px;">Order Total</td>
+								<td style="font-weight: bold; font-size: 15px;">$[[${order.total}]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<hr>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card card-body bg-light">
+					<table class="table">
+						<thead>
+							<tr style="text-align: center;">
+								<th style="width: 10%">Product</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="item : ${orderedBooks}">
+								<tr>
+									<td><img th:src="${item.getBook().image}" alt="img"
+										style="height: 150px; width: 90px; margin-left: 20px;"></td>
+									<td><a style="font-size: 15px; font-weight: bold">[[${item.getBook().title}]]</a>
+										<p>by [[${item.getBook().authors}]]</p>
+										<p style="color: rgb(236, 74, 74); font-weight: bold;">$[[${item.getBook().price}]]</p>
+										<p>
+											<span style="font-weight: bold;">Quantity: </span>[[${item.getQuantity()}]]
+										</p></td>
+								</tr>
+							</th:block>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
 </body>
 </html>

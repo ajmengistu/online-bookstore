@@ -1,6 +1,9 @@
 package com.bookstore.onlinebookstore.service;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,7 +29,7 @@ public class OrderService {
 		order.setDateOrdered(new Date());
 		order.setUserId(userId);
 		order.setTotal(totalCost);
-		order.setHash(getOrderNumberHash());
+		order.setHash(generateOrderNumberHash());
 		orderRepository.save(order);
 	}
 
@@ -35,7 +38,7 @@ public class OrderService {
 		return orderRepository.findFirstByOrderByOrderIdDesc().getOrderId();
 	}
 
-	public String getOrderNumberHash() {
+	public String generateOrderNumberHash() {
 		return UUID.randomUUID().toString();
 	}
 
@@ -43,6 +46,26 @@ public class OrderService {
 		Order order = orderRepository.findById(orderId).get();
 		order.setPayed(true);
 		orderRepository.save(order);
+	}
+
+	public Order getOrderById(Long orderId) {
+		return orderRepository.findById(orderId).get();
+
+	}
+
+	public String getOrderHash(Long orderId) {
+		return getOrderById(orderId).getHash();
+	}
+
+	public String formatDate(Date date) {
+		DateFormat df = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+		return df.format(date).toString();
+
+	}
+
+	public Order getOrderByHash(String orderID) {
+		return orderRepository.findFirstByHash(orderID);
+
 	}
 
 }

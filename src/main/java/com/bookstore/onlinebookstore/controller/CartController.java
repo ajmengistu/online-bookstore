@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookstore.onlinebookstore.model.Address;
 import com.bookstore.onlinebookstore.model.Cart;
@@ -107,7 +108,7 @@ public class CartController {
 
 	@PostMapping("/place-order")
 	public String placeOrder(@RequestParam("payment_method_nonce") String paymentMethodNonce, ModelMap modelMap,
-			HttpServletRequest request) {
+			HttpServletRequest request, RedirectAttributes redirectAttr) {
 		User user = (User) request.getSession().getAttribute("user");
 		Cart cart = (Cart) modelMap.get("cart");
 
@@ -119,8 +120,15 @@ public class CartController {
 			orderService.updatePayed(orderId);
 			orderedBookService.insert(cart, orderId);
 			shoppingCartService.clearUserCart(user.getId(), cart, request, modelMap);
+//		hash
+			redirectAttr.addFlashAttribute("orderId", orderId);
+			String hash = orderService.getOrderHash(orderId);
+			return "redirect:/account/order-details?orderID=" + hash;
+		} else {
+			redirectAttr.addFlashAttribute("PAYMENT_METHOD_ERROR_MESSAGE_1", "Error! Your paymethod was declined.");
+			redirectAttr.addFlashAttribute("PAYMENT_METHOD_ERROR_MESSAGE_2",
+					"Please try again or choose a different payment method.");
+			return "redirect:/cart/checkout";
 		}
-
-		return "order-details";
 	}
 }

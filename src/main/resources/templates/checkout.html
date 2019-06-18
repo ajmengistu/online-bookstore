@@ -55,7 +55,18 @@
 			<div class="col-md-5">
 				<h6>Payment Method</h6>
 				<br>
-				<!-- Set up a container element for the button -->
+
+				<th:block th:if="${PAYMENT_METHOD_ERROR_MESSAGE_1}">
+					<span class="alert alert-danger">[[${PAYMENT_METHOD_ERROR_MESSAGE_1}]]
+					</span>
+					<hr>
+					<span class="alert alert-danger">[[${PAYMENT_METHOD_ERROR_MESSAGE_2}]]
+					</span>
+					<br>
+					<br>
+					<br>
+				</th:block>
+
 				<div class="container">
 					<form id="placeOrder" method="post"
 						th:action="@{/cart/place-order}">
@@ -63,6 +74,7 @@
 					</form>
 				</div>
 				<br>
+
 
 			</div>
 

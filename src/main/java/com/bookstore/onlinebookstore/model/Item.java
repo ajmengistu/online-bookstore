@@ -4,6 +4,10 @@ public class Item {
 	private Book book;
 	private int quantity;
 
+	public Item() {
+		
+	}
+	
 	public Item(Book book, Integer quantity) {
 		this.book = book;
 		this.quantity = quantity;
