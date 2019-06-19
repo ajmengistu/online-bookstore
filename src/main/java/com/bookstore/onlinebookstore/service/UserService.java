@@ -2,10 +2,13 @@ package com.bookstore.onlinebookstore.service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.Item;
 import com.bookstore.onlinebookstore.model.Order;
 import com.bookstore.onlinebookstore.model.User;
+import com.bookstore.onlinebookstore.model.enums.RoleType;
+import com.bookstore.onlinebookstore.model.forms.AccountRegistrationForm;
 import com.bookstore.onlinebookstore.repository.UserRepository;
 
 @Service
@@ -132,4 +137,34 @@ public class UserService {
 		System.out.println(recommendedBooks);
 		modelMap.put("recommendedBooks", recommendedBooks);
 	}
+
+	public String createNewAccount(@Valid AccountRegistrationForm accountRegistrationForm, ModelMap modelMap,
+			RedirectAttributes redirectAttr) {
+		if (!accountRegistrationForm.getPassword().equals(accountRegistrationForm.getConfirmPassword())) {
+			modelMap.put("ERROR", "Error! Your password does not match. Please try again.");
+			return "register";
+		} else {
+			if (userRepository.findByEmail(accountRegistrationForm.getEmail()) != null) {
+				modelMap.put("ERROR", "Error! The email provided already exists. Please try again.");
+				return "register";
+			} else {
+				createNewUser(accountRegistrationForm);
+				redirectAttr.addFlashAttribute("REGISTRATION_SUCCESSFUL_MESSAGE",
+						"Success! You have successfully registered for an account.");
+				return "redirect:/login";
+			}
+		}
+	}
+
+	private void createNewUser(@Valid AccountRegistrationForm accountRegistrationForm) {
+		User user = new User();
+		user.setFirstName(accountRegistrationForm.getFirstName());
+		user.setLastName(accountRegistrationForm.getLastName());
+		user.setEmail(accountRegistrationForm.getEmail());
+		user.setPassword(passwordEncoder.encode(accountRegistrationForm.getPassword()));
+		user.setUserRole(RoleType.CUSTOMER);
+		user.setDateCreated(new Date());
+		userRepository.save(user);
+	}
+
 }

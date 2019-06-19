@@ -10,7 +10,8 @@
 	<div class="container"></div>
 	<div class="container col-lg-3">
 		<form class="needs-validation border border-dark-1" method="POST"
-			th:action="@{/register.do}" style="margin-top: 15%;" novalidate>
+			th:action="@{/register.do}" style="margin-top: 15%;"
+			th:object="${accountRegistrationForm}" novalidate>
 			<a th:href="@{/}"> <img
 				th:src="@{/images/onlinebookstore-logo.png}" alt="" width="20%;"
 				class="mt-4"
@@ -19,9 +20,12 @@
 				account</h3>
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
+					<div th:if="${ERROR}">
+						<div class="alert alert-danger">[[${ERROR}]]</div>
+					</div>
 					<label for="validationCustom01"></label> <input type="text"
-						class="form-control" name="firstName" placeholder="First name"
-						required>
+						class="form-control" th:field="*{firstName}"
+						placeholder="First name" required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid first
 						name!</div>
@@ -30,8 +34,8 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="text"
-						class="form-control" name="lastName" placeholder="Last name"
-						required>
+						class="form-control" th:field="*{lastName}"
+						placeholder="Last name" required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid last name!
 					</div>
@@ -40,7 +44,8 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="email"
-						class="form-control" name="email" placeholder="Email" required>
+						class="form-control" th:field="*{email}" placeholder="Email"
+						required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid email!</div>
 				</div>
@@ -48,8 +53,8 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="password"
-						class="form-control" name="password" id="validationCustom01"
-						placeholder="Password" required>
+						class="form-control" th:field="*{password}"
+						id="validationCustom01" placeholder="Password" required>
 					<div class="valid-feedback">Looks good!</div>
 					<div class="invalid-feedback">Please enter a valid password!
 					</div>
@@ -58,8 +63,8 @@
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-3">
 					<label for="validationCustom01"></label> <input type="password"
-						class="form-control" name="verifyPassword"
-						placeholder="Verify password" required>
+						class="form-control" th:field="*{confirmPassword}"
+						placeholder="Confirm password" required>
 					<div class="valid-feedback">
 						<!-- Looks good! -->
 					</div>
