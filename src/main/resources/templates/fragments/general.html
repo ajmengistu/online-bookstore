@@ -88,7 +88,7 @@
 							</th:block>
 
 							<th:block th:if="${session.user != null}">
-								<a class="dropdown-item" href="/c/account"><i
+								<a class="dropdown-item" th:href="@{/account/profile}"><i
 									class="fa
                                         fa-user"
 									aria-hidden="true"></i>&nbsp;&nbsp;<span

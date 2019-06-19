@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Account profile | OnlineBookstore</title>
+<th:block
+	th:insert="fragments/bootstrap-starter-template.html :: bootstrap-css"></th:block>
+</head>
+<body>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+	<div style="text-align: center" class="mt-4">
+		<h3>Login &#38; Security</h3>
+	</div>
+	<br>
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-5">
+			<div class="card card-body bg-white">
+				<table class="table borderless">
+					<tbody>
+						<tr>
+							<td style="font-weight: bold;">Name:</td>
+							<td style="">[[${session.user.firstName}]]
+								[[${session.user.lastName}]]</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold;">Email:</td>
+							<td style="">[[${session.user.email}]]</td>
+							<td><button type="button" class="btn btn-secondary"
+									data-toggle="modal" data-target="#updateAccountEmail">Edit</button></td>
+
+						</tr>
+						<tr>
+							<td style="font-weight: bold;">Password:</td>
+							<td style="">*******************</td>
+							<td><button type="button" class="btn btn-secondary"
+									data-toggle="modal" data-target="#updateAccountPassword">Edit</button>
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<th:block
+		th:insert="fragments/modal-forms.html :: update-account-password"></th:block>
+	<th:block
+		th:insert="fragments/modal-forms.html :: update-account-email"></th:block>
+
+	<th:block
+		th:insert="fragments/bootstrap-starter-template.html :: bootstrap-scripts"></th:block>
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
+
+</body>
+</html>
