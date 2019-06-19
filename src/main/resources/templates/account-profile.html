@@ -17,6 +17,12 @@
 		<div class="col-md-5">
 			<div class="card card-body bg-white">
 				<table class="table borderless">
+					<th:block th:if="${ERROR}">
+						<span class="alert alert-danger">[[${ERROR}]]</span>
+					</th:block>
+					<th:block th:if="${SUCCESS}">
+						<span class="alert alert-success">[[${SUCCESS}]]</span>
+					</th:block>
 					<tbody>
 						<tr>
 							<td style="font-weight: bold;">Name:</td>

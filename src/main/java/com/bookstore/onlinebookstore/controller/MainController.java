@@ -27,7 +27,7 @@ import com.bookstore.onlinebookstore.service.BookService;
 import com.bookstore.onlinebookstore.service.ShoppingCartService;
 
 @Controller
-@SessionAttributes({ "URL_REF", "user", "cart"})
+@SessionAttributes({ "URL_REF", "user", "cart" })
 public class MainController {
 	@Autowired
 	private UserRepository userRepo;
@@ -88,9 +88,11 @@ public class MainController {
 		return "register";
 	}
 
-	@PostMapping("/register.do")
+	@PostMapping("/register.do") // register/new/user
 	public String validateUserRegistrationForm(ModelMap modelMap, HttpServletRequest request,
 			RedirectAttributes redirectAttr) {
+		// Error! Email already exists. Please enter another email.
+		// Error! Password does not match. Please try again.
 		System.out.println(request.getParameter("firstName"));
 		System.out.println(request.getParameter("lastName"));
 		System.out.println(request.getParameter("email"));
@@ -140,7 +142,7 @@ public class MainController {
 
 		modelMap.put("user", user);
 		Cart cart = shoppingCartService.getSavedUserShoppingCart(user);
-		
+
 		modelMap.put("cart", cart);
 
 		String url_ref = request.getSession().getAttribute("URL_REF").toString();

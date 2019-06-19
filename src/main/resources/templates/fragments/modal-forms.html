@@ -121,12 +121,12 @@
 							<form th:action="@{/account/password/update}" method="post">
 								<label for="inputAddress"><strong></strong></label> <input
 									required type="password" class="form-control"
-									name="current-password" placeholder="Current password">
+									name="currentPassword" placeholder="Current password">
 								<br> <label for=""><strong></strong></label> <input
 									required type="password" class="form-control"
-									name="new-password" placeholder="New password"> <br>
+									name="newPassword" placeholder="New password"> <br>
 								<label for="inputCity"><strong></strong></label> <input required
-									type="password" class="form-control" name="confirm-password"
+									type="password" class="form-control" name="confirmPassword"
 									placeholder="Confirm password"> <br>
 
 								<div class="modal-footer d-flex justify-content-center"
@@ -156,13 +156,12 @@
 						<div class="md-form mb-5">
 							<form th:action="@{/account/email/update}" method="post">
 								<label for="inputAddress"><strong></strong></label> <input
-									required type="email" class="form-control"
-									name="current-password" placeholder="Current email"> <br>
-								<label for=""><strong></strong></label> <input required
-									type="email" class="form-control" name="new-password"
-									placeholder="New email"> <br> <label
+									required type="email" class="form-control" name="currentEmail"
+									placeholder="Current email"> <br> <label for=""><strong></strong></label>
+								<input required type="email" class="form-control"
+									name="newEmail" placeholder="New email"> <br> <label
 									for="inputCity"><strong></strong></label> <input required
-									type="email" class="form-control" name="Confirm email"
+									type="email" class="form-control" name="confirmEmail"
 									placeholder="Confirm password"> <br>
 
 								<div class="modal-footer d-flex justify-content-center"
