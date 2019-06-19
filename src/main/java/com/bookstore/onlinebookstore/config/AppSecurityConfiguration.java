@@ -38,14 +38,13 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			// CUSTOMER & ADMIN
+			// CUSTOMER & ADMIN	
 			.antMatchers("/").permitAll()
 			.antMatchers("/login").permitAll()
-			.antMatchers("/register").permitAll()
-			.antMatchers("/test").permitAll()
+			.antMatchers("/register").permitAll()			
 			.antMatchers("/account", "/cart/checkout", "/account/order-details", "/account/order-history").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
+			.antMatchers("/account/recommendations", "/account/profile", "/loginSuccessful").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
 			.antMatchers("/admin").hasAuthority(RoleType.ADMIN.toString())
-//			.antMatchers("/cart/checkout").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
 			.and()
 			// Login
 			.formLogin().loginPage("/login")

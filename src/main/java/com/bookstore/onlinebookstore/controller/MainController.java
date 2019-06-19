@@ -106,12 +106,12 @@ public class MainController {
 
 		String url_ref = request.getSession().getAttribute("URL_REF").toString();
 		String url = null;
-		if (url_ref != null && url_ref.contains("/cart/view")) {
+		if (url_ref != null) {
 			System.out.println("-------------------------------" + url_ref);
-			url = "redirect:/cart/checkout";
+			url = "redirect:" + url_ref;
 		} else {
 			System.out.println("hello: " + url_ref);
-			url = "redirect:/cart/checkout";
+			url = "redirect:/";
 		}
 		return url;
 	}
