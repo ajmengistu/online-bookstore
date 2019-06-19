@@ -1,13 +1,20 @@
 package com.bookstore.onlinebookstore.service;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookstore.onlinebookstore.model.Book;
+import com.bookstore.onlinebookstore.model.Item;
+import com.bookstore.onlinebookstore.model.Order;
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.repository.UserRepository;
 
@@ -17,6 +24,12 @@ public class UserService {
 	UserRepository userRepository;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private OrderedBookService orderedBookService;
+	@Autowired
+	private BookService bookService;
 
 	public void updateUserAccountPassword(HttpServletRequest request, RedirectAttributes redirectAttr, String email) {
 		String currentPassword = request.getParameter("currentPassword");
@@ -92,5 +105,31 @@ public class UserService {
 			return false;
 		}
 
+	}
+
+	public void getAccountUserRecommendations(Principal principal, ModelMap modelMap) {
+		User user = getCurrentUserByEmail(principal.getName());
+		List<Book> recommendedBooks = new ArrayList<>();
+
+		List<Order> orders = orderService.getAllOrdersByUserId(user.getId());
+		for (Order order : orders) {
+			List<Item> orderedBooks = orderedBookService.getOrderedBooksByOrderId(order.getOrderId());
+			for (Item item : orderedBooks) {
+				for (Book book : bookService.getBooksByAuthor(item.getBook().getAuthors())) {
+					recommendedBooks.add(book);
+					if (recommendedBooks.size() > 25) {
+						break;
+					}
+				}
+				if (recommendedBooks.size() > 25) {
+					break;
+				}
+			}
+			if (recommendedBooks.size() > 25) {
+				break;
+			}
+		}
+		System.out.println(recommendedBooks);
+		modelMap.put("recommendedBooks", recommendedBooks);
 	}
 }
