@@ -2,9 +2,71 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title></title>
+<title>Order history | OnlineBookstore</title>
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
 </head>
 <body>
-<h1>Order History!</h1>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+
+	<div class="container mt-4">
+		<h3>Your Order History</h3>
+		<hr>
+	</div>
+
+
+
+
+	<div class="container">
+		<th:block th:each="order : ${orders}">
+			<h5>Ordered [[${#dates.format(order.key.dateOrdered, 'EEEE, MMMM
+				dd, yyyy')}]]</h5>
+
+
+			<div class="row">
+				<div class="col-md-8">
+					<div class="card card-body bg-light">
+						<table class="table">
+							<thead>
+								<tr style="text-align: center;">
+									<th style="width: 10%"></th>
+									<th style="width: 35%"></th>
+									<th style="width: 20%"></th>
+									<!--<th style="width: 8%">Price</th>
+								<th style="width: 50%">Quantity</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="item : ${order.value}">
+									<tr>
+										<td><img th:src="${item.getBook().image}" alt="img"
+											style="height: 150px; width: 90px; margin-left: 20px;"></td>
+										<td><a style="font-size: 15px; font-weight: bold">[[${item.getBook().title}]]</a>
+											<p>by [[${item.getBook().authors}]]</p>
+											<p style="color: rgb(236, 74, 74); font-weight: bold;">$[[${item.getBook().price}]]</p>
+											<p>
+												<span style="font-weight: bold;">Quantity: </span>[[${item.getQuantity()}]]
+											</p></td>
+										<td></td>
+										<td><a
+											th:href="@{|/account/order-details?orderID=${order.key.hash}|}"><button
+													type="button" class="btn btn-secondary">Order
+													details</button></a>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<br>
+
+		</th:block>
+	</div>
+
+
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.bookstore.onlinebookstore.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +66,14 @@ public class CustomerController {
 	 */
 
 	@RequestMapping("/order-history")
-	public String getOrderHistory() {
+	public String getOrderHistory(ModelMap modelMap, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		System.out.println(user);
+		HashMap<Order, List<Item>> orders = orderedBookService
+				.getOrderedBooks(orderService.getAllOrdersByUserId(user.getId()));
+		modelMap.put("orders", orders);
+		System.out.println(orders);		
+
 		return "order-history";
 	}
 

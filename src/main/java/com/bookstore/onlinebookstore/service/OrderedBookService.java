@@ -2,6 +2,7 @@ package com.bookstore.onlinebookstore.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.Cart;
 import com.bookstore.onlinebookstore.model.Item;
+import com.bookstore.onlinebookstore.model.Order;
 import com.bookstore.onlinebookstore.model.OrderedBook;
 import com.bookstore.onlinebookstore.repository.OrderedBookRepository;
 
@@ -48,6 +50,13 @@ public class OrderedBookService {
 		for (Item item : items)
 			total += item.getQuantity();
 		return total;
+	}
+
+	public HashMap<Order, List<Item>> getOrderedBooks(List<Order> allOrdersByUserId) {
+		HashMap<Order, List<Item>> orders = new HashMap<>();
+		for (Order order : allOrdersByUserId)
+			orders.put(order, getOrderedBooksByOrderId(order.getOrderId()));
+		return orders;
 	}
 
 }

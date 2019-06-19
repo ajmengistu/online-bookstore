@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,8 @@ public class OrderService {
 	public Order getOrderByHashAndByUserId(String hash, Long userId) {
 		return orderRepository.findFirstByHashAndUserId(hash, userId);
 	}
-
+	
+	public List<Order> getAllOrdersByUserId(Long userId){
+		return orderRepository.findAllByUserId(userId);
+	}
 }
