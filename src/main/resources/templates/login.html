@@ -7,11 +7,11 @@
 	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
-	<div class="container">
-		<form class="needs-validation" method="POST"
-			th:action="@{${userLogin}}" novalidate>
-			<div class="form-row">
-				<div class="col-md-4 mb-3">
+	<div class="container col-lg-3">
+		<form class="needs-validation border border-dark-1" method="POST"
+			th:action="@{${userLogin}}" style="margin-top: 15%;" novalidate>
+			<div class="form-row ml-4 mr-4">
+				<div class="col-md-12 mb-3">
 					<div
 						th:if="${(param.error != null) and (param.error[0] == 'true')}">
 						<div class="alert alert-danger">Your email or password is
@@ -26,27 +26,28 @@
 							th:text="${LOGOUT_SUCCESSFUL_MESSAGE}"></div>
 					</div>
 					<label for="validationCustom01"></label> <input type="text"
-						class="form-control" id="validationCustom01" placeholder="Email"
-						name="username" required>
+						class="form-control" placeholder="Email" name="username" required>
 					<div class="invalid-tooltip">Please enter a valid email!</div>
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="col-md-4 mb-3">
+			<div class="form-row ml-4 mr-4">
+				<div class="col-md-12 mb-3">
 					<label for="validationCustom01"></label> <input type="password"
-						class="form-control" id="validationCustom01"
-						placeholder="Password" name="password" required>
+						class="form-control" placeholder="Password" name="password"
+						required>
 					<div class="invalid-tooltip">Please enter a valid password!</div>
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="col-md-4 mb-3 mt-4">
+			<div class="form-row ml-4 mr-4 mb-4">
+				<div class="col-md-12 mb-3 mt-4">
 					<button class="btn btn-primary btn-block" type="submit">Sign
 						in</button>
 				</div>
+				<a class="" href="/register">New customer? Register here </a>
 			</div>
+			
 		</form>
-		<a href="/register">Register</a>
+		
 	</div>
 	<script>
 		// Example starter JavaScript for disabling form submissions if there are invalid fields

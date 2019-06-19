@@ -12,11 +12,11 @@
 	</div>
 	<div class="container col-lg-3">
 		<form class="needs-validation border border-dark-1" method="POST"
-			th:action="@{${reg}}" style="margin-top: 15%;" novalidate>
+			th:action="@{/register.do}" style="margin-top: 15%;" novalidate>
 			<!-- <img src="./onlinebookstore-logo.png" alt="" width="20%;"
 				class="mt-4"
 				style="display: block; margin-left: auto; margin-right: auto;"> -->
-			<h3 class="mt-4 ml-4">Create an account</h3>
+			<h3 class="mt-4 ml-4" style="text-align: center;">Create an account</h3>
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="text"
@@ -85,9 +85,7 @@
 					type="submit">Sign up</button>
 			</div>
 		</form>
-		<form action="/" method="GET">
-			<button type="submit">home</button>
-		</form>
+
 		<script>
 			// Example starter JavaScript for disabling form submissions if there are invalid fields
 			(function() {

@@ -84,7 +84,6 @@ public class MainController {
 
 	@RequestMapping("/register")
 	public String userRegistrationPage(ModelMap modelMap) {
-		modelMap.put("reg", "/register.do");
 		return "register";
 	}
 
