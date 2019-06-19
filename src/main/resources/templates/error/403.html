@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
+<title>Page Forbidden | OnlineBookstore</title>
+</head>
+<body>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+	<div class="container">
+		<h3 class="mt-4 mb-4">
+			Sorry, you are not allowed to access this page. Try searching or go to <a
+				style="text-decoration: none;" href="/">OnlineBookstore home
+				page</a>.
+		</h3>
+		<img alt="" th:src="@{/images/stop-sign.jpg}" width="60%">
+	</div>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
+</body>
+</html>

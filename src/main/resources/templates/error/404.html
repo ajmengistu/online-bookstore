@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<th:block th:insert="fragments/general.html :: head-links"></th:block>
+<title>Page not found | OnlineBookstore</title>
+</head>
+<body>
+	<th:block th:replace="fragments/general.html :: navbar"></th:block>
+
+	<div class="container">
+		<h3 class="mt-4 mb-4">
+			Sorry, we could not find that page. Try searching or go to <a
+				style="text-decoration: none;" href="/">OnlineBookstore home
+				page</a>.
+		</h3>
+		<img alt="" th:src="@{/images/books-tea-cookies.jpg}" width="80%">
+	</div>
+	<th:block th:insert="fragments/general.html :: scripts"></th:block>
+</body>
+</html>
