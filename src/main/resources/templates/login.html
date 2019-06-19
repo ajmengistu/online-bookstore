@@ -10,6 +10,10 @@
 	<div class="container col-lg-3">
 		<form class="needs-validation border border-dark-1" method="POST"
 			th:action="@{${userLogin}}" style="margin-top: 15%;" novalidate>
+			<a th:href="@{/}"> <img
+				th:src="@{/images/onlinebookstore-logo.png}" alt="" width="20%;"
+				class="mt-4"
+				style="display: block; margin-left: auto; margin-right: auto;"></a>
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-3">
 					<div
@@ -45,9 +49,9 @@
 				</div>
 				<a class="" href="/register">New customer? Register here </a>
 			</div>
-			
+
 		</form>
-		
+
 	</div>
 	<script>
 		// Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -73,5 +77,6 @@
 					}, false);
 		})();
 	</script>
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
 </body>
 </html>

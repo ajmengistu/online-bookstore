@@ -7,16 +7,16 @@
 	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
-	<div class="container">
-		<h1>Register page!!!</h1>
-	</div>
+	<div class="container"></div>
 	<div class="container col-lg-3">
 		<form class="needs-validation border border-dark-1" method="POST"
 			th:action="@{/register.do}" style="margin-top: 15%;" novalidate>
-			<!-- <img src="./onlinebookstore-logo.png" alt="" width="20%;"
+			<a th:href="@{/}"> <img
+				th:src="@{/images/onlinebookstore-logo.png}" alt="" width="20%;"
 				class="mt-4"
-				style="display: block; margin-left: auto; margin-right: auto;"> -->
-			<h3 class="mt-4 ml-4" style="text-align: center;">Create an account</h3>
+				style="display: block; margin-left: auto; margin-right: auto;"></a>
+			<h3 class="mt-4 ml-4" style="text-align: center;">Create an
+				account</h3>
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-0">
 					<label for="validationCustom01"></label> <input type="text"
@@ -123,6 +123,6 @@
 			})();
 		</script>
 	</div>
+	<th:block th:insert="fragments/footer.html :: footer"></th:block>
 </body>
-
 </html>
