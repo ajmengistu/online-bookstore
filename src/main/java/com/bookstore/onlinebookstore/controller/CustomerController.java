@@ -111,8 +111,8 @@ public class CustomerController {
 		return "recommendations";
 	}
 
-	@RequestMapping("/change-password")
-	@PostMapping("/change-password")
+	@RequestMapping("/password/reset")
+	@PostMapping("/password/reset.do")
 	public String changePassword(ModelMap modelMap, HttpServletRequest request) {
 		if (request.getParameter("email") != null) {
 			return passwordResetTokenService.resetPasswordByEmail(request.getParameter("email"), modelMap);
@@ -120,8 +120,21 @@ public class CustomerController {
 		return "change-password";
 	}
 
-	@RequestMapping("/reset-password")
-	public String resetPassword(@RequestParam String token) {
+	@RequestMapping("/password/reset/")
+	public String resetPassword(@RequestParam String token, ModelMap modelMap) {
+		if (token != null) {
+			// validate token
+			// error page
+		}
+		System.out.println(token);
+		modelMap.put("PASSWORD_MATCH_ERROR", "Error! The password does not match. Please try again.");
+		return "reset-password";
+	}
+
+	@PostMapping("/password/reset/change.do")
+	public String updatePassword(ModelMap modelMap) {
+		// if token is valid, send them to login page with a successful message.
+		// else password did not match try again.
 		return "reset-password";
 	}
 

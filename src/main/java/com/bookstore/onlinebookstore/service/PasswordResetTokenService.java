@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -23,8 +24,10 @@ public class PasswordResetTokenService {
 		User user = userService.getCurrentUserByEmail(email);
 		if (user != null) {
 			insertPasswordResetToken(user);
-//			return "redirect:/account/reset-password";
-			return "redirect:/";
+			sendUserEmail(user);
+			modelMap.put("SUCCESS",
+					"Success! We have sent you an email. Please contact us if you do not receive it within a few minutes. Note: the link will expire after 10 minutes.");
+			return "change-password";
 
 		} else {
 			modelMap.put("ERROR",
@@ -32,6 +35,16 @@ public class PasswordResetTokenService {
 			return "change-password";
 		}
 
+	}
+
+	private void sendUserEmail(User user) {
+		String token = getUserGeneratedToken(user);
+		System.out.println("senduseremail: " + token);
+//		mailSender
+	}
+
+	private String getUserGeneratedToken(User user) {
+		return passwordResetTokenRepository.findFirstByUserIdOrderByExpirationDateDesc(user.getId()).getToken();
 	}
 
 	private void insertPasswordResetToken(User user) {
@@ -54,4 +67,5 @@ public class PasswordResetTokenService {
 		Date afterAddingTenMins = new Date(t + (10 * ONE_MINUTE_IN_MILLIS));
 		return afterAddingTenMins;
 	}
+
 }
