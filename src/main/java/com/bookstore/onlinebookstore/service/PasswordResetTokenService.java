@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -19,6 +18,8 @@ public class PasswordResetTokenService {
 	private UserService userService;
 	@Autowired
 	private PasswordResetTokenRepository passwordResetTokenRepository;
+	@Autowired
+	private EmailService emailService;
 
 	public String resetPasswordByEmail(String email, ModelMap modelMap) {
 		User user = userService.getCurrentUserByEmail(email);
@@ -39,8 +40,13 @@ public class PasswordResetTokenService {
 
 	private void sendUserEmail(User user) {
 		String token = getUserGeneratedToken(user);
-		System.out.println("senduseremail: " + token);
-//		mailSender
+		String subject = "[OnlineBookstore] Password Reset E-mail";
+		String body = "You're receiving this e-mail because you or someone else has requested a password reset for your user account.\r\n"
+				+ "\r\n" + "Click the link below to reset your password:\r\n"
+				+ "https://http://localhost:8080/account/reset?token=" + token + "\r\n" + "\r\n"
+				+ "If you did not request a password reset you can safely ignore this email.\r\n" + "";
+		
+		emailService.sendSimpleMessage(user.getEmail(), "no-reply@onlinebookstore.com", subject, body);
 	}
 
 	private String getUserGeneratedToken(User user) {
