@@ -41,7 +41,8 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			// CUSTOMER & ADMIN	
 			.antMatchers("/").permitAll()
 			.antMatchers("/login").permitAll()
-			.antMatchers("/register").permitAll()			
+			.antMatchers("/register").permitAll()
+			.antMatchers("/account/change-password").permitAll()
 			.antMatchers("/account", "/cart/checkout", "/account/order-details", "/account/order-history").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
 			.antMatchers("/account/recommendations", "/account/profile", "/loginSuccessful").hasAnyAuthority(RoleType.CUSTOMER.toString(), RoleType.ADMIN.toString())
 			.antMatchers("/admin").hasAuthority(RoleType.ADMIN.toString())

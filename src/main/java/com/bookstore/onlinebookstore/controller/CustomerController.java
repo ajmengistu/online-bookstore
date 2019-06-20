@@ -22,6 +22,7 @@ import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.service.AddressService;
 import com.bookstore.onlinebookstore.service.OrderService;
 import com.bookstore.onlinebookstore.service.OrderedBookService;
+import com.bookstore.onlinebookstore.service.PasswordResetTokenService;
 import com.bookstore.onlinebookstore.service.UserService;
 
 @Controller
@@ -35,6 +36,8 @@ public class CustomerController {
 	private OrderedBookService orderedBookService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private PasswordResetTokenService passwordResetTokenService;
 
 	@RequestMapping("/order-details")
 	public String getOrderDetails(@RequestParam String orderID, ModelMap modelMap, HttpServletRequest request,
@@ -107,4 +110,19 @@ public class CustomerController {
 		userService.getAccountUserRecommendations(principal, modelMap);
 		return "recommendations";
 	}
+
+	@RequestMapping("/change-password")
+	@PostMapping("/change-password")
+	public String changePassword(ModelMap modelMap, HttpServletRequest request) {
+		if (request.getParameter("email") != null) {
+			return passwordResetTokenService.resetPasswordByEmail(request.getParameter("email"), modelMap);
+		}
+		return "change-password";
+	}
+
+	@RequestMapping("/reset-password")
+	public String resetPassword(@RequestParam String token) {
+		return "reset-password";
+	}
+
 }
