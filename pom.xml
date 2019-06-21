@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bookstore.onlinebookstore</groupId>
-	<artifactId>online-book-store</artifactId>
+	<artifactId>online-bookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>online-bookstore</name>
