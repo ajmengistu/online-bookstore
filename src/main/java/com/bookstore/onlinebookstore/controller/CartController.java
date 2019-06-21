@@ -28,6 +28,7 @@ import com.bookstore.onlinebookstore.service.OrderService;
 import com.bookstore.onlinebookstore.service.OrderedBookService;
 import com.bookstore.onlinebookstore.service.PaymentService;
 import com.bookstore.onlinebookstore.service.ShoppingCartService;
+import com.bookstore.onlinebookstore.service.UserService;
 
 @Controller
 @RequestMapping("/cart")
@@ -47,6 +48,8 @@ public class CartController {
 	private ShoppingCartService shoppingCartService;
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private UserService userService;
 
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
@@ -120,12 +123,15 @@ public class CartController {
 
 		Boolean paymentSuccessful = paymentService.makePayment(orderId, cart.getTotalCost(), paymentMethodNonce);
 		if (paymentSuccessful) {
+			String hash = orderService.getOrderHash(orderId);
+			// *****************************************
 			orderService.updatePayed(orderId);
 			orderedBookService.insert(cart, orderId);
 			shoppingCartService.clearUserCart(user.getId(), cart, request, modelMap);
 			bookService.updateBookStock(cart);
+			userService.sendOrderDetailsEmail(hash, user);
+			// *****************************************
 			redirectAttr.addFlashAttribute("orderId", orderId);
-			String hash = orderService.getOrderHash(orderId);
 			return "redirect:/account/order-details?orderID=" + hash;
 		} else {
 			redirectAttr.addFlashAttribute("PAYMENT_METHOD_ERROR_MESSAGE_1", "Error! Your paymethod was declined.");

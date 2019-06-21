@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookstore.onlinebookstore.model.Address;
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.Item;
 import com.bookstore.onlinebookstore.model.Order;
@@ -34,6 +35,10 @@ public class UserService {
 	private OrderedBookService orderedBookService;
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private AddressService addressService;
 
 	public void updateUserAccountPassword(HttpServletRequest request, RedirectAttributes redirectAttr, String email) {
 		String currentPassword = request.getParameter("currentPassword");
@@ -124,13 +129,16 @@ public class UserService {
 	public void getAccountUserRecommendations(Principal principal, ModelMap modelMap) {
 		User user = getCurrentUserByEmail(principal.getName());
 		List<Book> recommendedBooks = new ArrayList<>();
+		List<Book> allOrderedBooks = new ArrayList<>();
 
 		List<Order> orders = orderService.getAllOrdersByUserId(user.getId());
 		for (Order order : orders) {
 			List<Item> orderedBooks = orderedBookService.getOrderedBooksByOrderId(order.getOrderId());
+			allOrderedBooks.addAll(getAllBooksFromItems(orderedBooks));
 			for (Item item : orderedBooks) {
 				for (Book book : bookService.getBooksByAuthor(item.getBook().getAuthors())) {
-					recommendedBooks.add(book);
+					if (!allOrderedBooks.contains(book))
+						recommendedBooks.add(book);
 					if (recommendedBooks.size() > 25) {
 						break;
 					}
@@ -143,8 +151,15 @@ public class UserService {
 				break;
 			}
 		}
-		System.out.println(recommendedBooks);
 		modelMap.put("recommendedBooks", recommendedBooks);
+	}
+
+	private List<Book> getAllBooksFromItems(List<Item> orderedBooks) {
+		List<Book> list = new ArrayList<>();
+		for (Item item : orderedBooks) {
+			list.add(item.getBook());
+		}
+		return list;
 	}
 
 	public String createNewAccount(@Valid AccountRegistrationForm accountRegistrationForm, ModelMap modelMap,
@@ -174,6 +189,24 @@ public class UserService {
 		user.setUserRole(RoleType.CUSTOMER);
 		user.setDateCreated(new Date());
 		userRepository.save(user);
+	}
+
+	public void sendOrderDetailsEmail(String hash, User user) {
+		Order order = orderService.getOrderByHash(hash);
+		Address address = addressService.getAddressById(order.getAddressId());
+
+		String to = user.getEmail();
+		String from = "OnlineBookstore.com <auto-confirm@onlinebookstore.com>";
+		String subject = "Your OnlineBookstore.com Order Details";
+		String body = "Hello " + user.getFirstName() + " " + user.getLastName() + ",\n\n"
+				+ "Thank you for shopping with us. We’ll send a confirmation when your item ships.\n\n" + "Details: \n"
+				+ "Order #: " + hash + "\n\n" + "Ship to: \n" + "" + address.getFirstName() + " "
+				+ address.getLastName() + "\n" + address.getAddress1() + " " + address.getAddress2() + "\n"
+				+ address.getCity() + ", " + address.getState() + " " + address.getZip() + "\n\n"
+				+ "Total Before Tax:    $" + order.getTotal() + "\n" + "Estimated Tax:    $0.00\n" + "Order Total:    $"
+				+ order.getTotal() + "\n\n" + "We hope to see you again soon.\r\n" + "\r\n" + "OnlineBookstore.com \r\n"
+				+ "";
+		emailService.sendSimpleMessage(to, from, subject, body);
 	}
 
 }

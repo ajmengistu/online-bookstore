@@ -9,9 +9,8 @@
 	<th:block th:replace="fragments/general.html :: navbar"></th:block>
 
 	<div class="container">
-		<h4 class="mt-4">
-			Your Recommendations
-		</h4>		
+		<h3 class="mt-4">Your Recommendations</h3>
+		<hr>
 		<div class="row">
 			<div th:each="item,iter : ${recommendedBooks}">
 

@@ -48,20 +48,16 @@ public class CustomerAccountController {
 			User user = (User) request.getSession().getAttribute("user");
 			Order order = orderService.getOrderByHashAndByUserId(hash, user.getId());
 			if (order != null) {
-
-				System.out.println(order);
 				modelMap.put("orderedDate", orderService.formatDate(order.getDateOrdered()));
 				modelMap.put("order", order);
 
 				Address address = addressService.getAddressById(order.getAddressId());
 				modelMap.put("userAddress", address);
+				
 				List<Item> orderedBooks = orderedBookService.getOrderedBooksByOrderId(order.getOrderId());
-				System.out.println(orderedBooks);
 				modelMap.put("orderedBooks", orderedBooks);
+				
 				modelMap.put("totalItemsOrdered", orderedBookService.getTotalQuantity(orderedBooks));
-
-				System.out.println(address);
-
 			} else {
 				return "redirect:/account/order-history";
 			}
