@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,6 +56,16 @@ public class UserService {
 		User user = getCurrentUserByEmail(email);
 		user.setPassword(passwordEncoder.encode(newPassword));
 		userRepository.save(user);
+	}
+
+	public void updateUserPassword(String newPassword, Long userId) {
+		User user = getUserByUserId(userId);
+		user.setPassword(passwordEncoder.encode(newPassword));
+		userRepository.save(user);
+	}
+
+	public User getUserByUserId(Long userId) {
+		return userRepository.findById(userId).get();
 	}
 
 	public boolean isCurrentPasswordValid(String password, String email) {

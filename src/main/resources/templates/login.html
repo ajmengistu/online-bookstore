@@ -17,6 +17,7 @@
 			<h3 class="mt-4 ml-4" style="text-align: center;">Sign in</h3>
 			<div class="form-row ml-4 mr-4">
 				<div class="col-md-12 mb-3">
+					<hr>
 					<div
 						th:if="${(param.error != null) and (param.error[0] == 'true')}">
 						<div class="alert alert-danger">Your email or password is
@@ -30,6 +31,11 @@
 						<div class="alert alert-success"
 							th:text="${LOGOUT_SUCCESSFUL_MESSAGE}"></div>
 					</div>
+					<div th:if="${PASSWORD_RESET_SUCCESSFUL}">
+						<div class="alert alert-success">[[${PASSWORD_RESET_SUCCESSFUL}]]
+						</div>
+					</div>
+
 					<label for="validationCustom01"></label> <input type="text"
 						class="form-control" placeholder="Email" name="username" required>
 					<div class="invalid-tooltip">Please enter a valid email!</div>

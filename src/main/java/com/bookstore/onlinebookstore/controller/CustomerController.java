@@ -123,19 +123,17 @@ public class CustomerController {
 	@RequestMapping("/password/reset/")
 	public String resetPassword(@RequestParam String token, ModelMap modelMap) {
 		if (token != null) {
-			// validate token
-			// error page
+			passwordResetTokenService.verifyToken(token, modelMap);
 		}
-		System.out.println(token);
-		modelMap.put("PASSWORD_MATCH_ERROR", "Error! The password does not match. Please try again.");
 		return "reset-password";
 	}
 
 	@PostMapping("/password/reset/change.do")
-	public String updatePassword(ModelMap modelMap) {
+	public String updatePassword(ModelMap modelMap, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		// if token is valid, send them to login page with a successful message.
 		// else password did not match try again.
-		return "reset-password";
+//		modelMap.put("TOKEN_VALID", "Error! The password does not match. Please try again.");
+		return passwordResetTokenService.updatePassword(modelMap, request, redirectAttributes);
 	}
 
 }

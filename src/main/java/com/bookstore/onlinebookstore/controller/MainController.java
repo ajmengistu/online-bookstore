@@ -108,9 +108,7 @@ public class MainController {
 		String url = null;
 		if (url_ref != null) {
 			System.out.println("-------------------------------" + url_ref);
-			if (url_ref.contains("/login")) {
-				url_ref = "/";
-			}
+			url_ref = "/";
 			url = "redirect:" + url_ref;
 		} else {
 			System.out.println("hello: " + url_ref);
