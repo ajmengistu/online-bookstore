@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookstore.onlinebookstore.model.Book;
+import com.bookstore.onlinebookstore.model.Cart;
+import com.bookstore.onlinebookstore.model.Item;
 import com.bookstore.onlinebookstore.repository.BookRepository;
 
 @Service
@@ -55,7 +57,7 @@ public class BookService {
 	public Book getBookById(String id) {
 		return bookRepository.findById(Long.parseLong(id)).get();
 	}
-	
+
 	public Book getBookById(Long id) {
 		return bookRepository.findById(id).get();
 	}
@@ -72,6 +74,14 @@ public class BookService {
 		else {
 			booksByAuthor.addAll(popularBooks.subList(0, 25 - booksByAuthor.size()));
 			return booksByAuthor;
+		}
+	}
+
+	public void updateBookStock(Cart cart) {
+		for (Item item : cart.getShoppingCart()) {
+			Book book = getBookById(item.getBook().getId());
+			book.setStock(book.getStock() - item.getQuantity());
+			bookRepository.save(book);
 		}
 	}
 }

@@ -27,7 +27,7 @@ import com.bookstore.onlinebookstore.service.UserService;
 
 @Controller
 @RequestMapping("/account")
-public class CustomerController {
+public class CustomerAccountController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
@@ -130,9 +130,6 @@ public class CustomerController {
 
 	@PostMapping("/password/reset/change.do")
 	public String updatePassword(ModelMap modelMap, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		// if token is valid, send them to login page with a successful message.
-		// else password did not match try again.
-//		modelMap.put("TOKEN_VALID", "Error! The password does not match. Please try again.");
 		return passwordResetTokenService.updatePassword(modelMap, request, redirectAttributes);
 	}
 

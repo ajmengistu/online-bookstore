@@ -22,6 +22,7 @@ import com.bookstore.onlinebookstore.model.Cart;
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.model.forms.AddressForm;
 import com.bookstore.onlinebookstore.service.AddressService;
+import com.bookstore.onlinebookstore.service.BookService;
 import com.bookstore.onlinebookstore.service.CartService;
 import com.bookstore.onlinebookstore.service.OrderService;
 import com.bookstore.onlinebookstore.service.OrderedBookService;
@@ -44,6 +45,8 @@ public class CartController {
 	private OrderedBookService orderedBookService;
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+	@Autowired
+	private BookService bookService;
 
 	@PostMapping("/cart.do")
 	public String cartItem(ModelMap modelMap, HttpServletRequest request) {
@@ -120,6 +123,7 @@ public class CartController {
 			orderService.updatePayed(orderId);
 			orderedBookService.insert(cart, orderId);
 			shoppingCartService.clearUserCart(user.getId(), cart, request, modelMap);
+			bookService.updateBookStock(cart);
 			redirectAttr.addFlashAttribute("orderId", orderId);
 			String hash = orderService.getOrderHash(orderId);
 			return "redirect:/account/order-details?orderID=" + hash;
