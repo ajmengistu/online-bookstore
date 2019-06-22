@@ -3,11 +3,11 @@ package com.bookstore.onlinebookstore.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Cart {
-	private List<Item> shoppingCart = new ArrayList<Item>();
+	private List<Item> shoppingCart = new LinkedList<>();
 
 	public List<Item> getShoppingCart() {
 		return shoppingCart;
@@ -39,8 +39,8 @@ public class Cart {
 		return total;
 	}
 
-	public boolean addItem(Item item) {
-		return shoppingCart.add(item);
+	public void addItem(Item item) {
+		shoppingCart.add(0, item);
 	}
 
 	public String getEstimatedDeliveryDate() {
