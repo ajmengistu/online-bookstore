@@ -68,7 +68,7 @@ public class MainController {
 		return "register";
 	}
 
-	@PostMapping("/register.do") // register/new/user
+	@PostMapping("/register.do")
 	public String validateUserRegistrationForm(ModelMap modelMap, HttpServletRequest request,
 			RedirectAttributes redirectAttr, @Valid AccountRegistrationForm accountRegistrationForm) {
 		return userService.createNewAccount(accountRegistrationForm, modelMap, redirectAttr);

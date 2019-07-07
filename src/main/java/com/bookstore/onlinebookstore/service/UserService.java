@@ -175,9 +175,19 @@ public class UserService {
 				createNewUser(accountRegistrationForm);
 				redirectAttr.addFlashAttribute("REGISTRATION_SUCCESSFUL_MESSAGE",
 						"Success! You have successfully registered for an account.");
+				sendNewUserEmailWelcome(accountRegistrationForm);
 				return "redirect:/login";
 			}
 		}
+	}
+
+	private void sendNewUserEmailWelcome(@Valid AccountRegistrationForm accountRegistrationForm) {
+		String to = accountRegistrationForm.getEmail();
+		String from = "OnlineBookstore.com <auto-confirm@onlinebookstore.com>";
+		String subject = accountRegistrationForm.getFirstName() + ", welcome to OnlineBookstore!";
+		String body = accountRegistrationForm.getFirstName() + ", welcome to OnlineBookstore!\r\n" + "\r\n"
+				+ "Browse your favorite books, our editorial picks, bestsellers, or customer favorites.\r\n" + "\r\n";
+		emailService.sendSimpleMessage(to, from, subject, body);
 	}
 
 	private void createNewUser(@Valid AccountRegistrationForm accountRegistrationForm) {

@@ -24,7 +24,6 @@ public class PaymentService {
 	private static final String MERCHANT_ID = "64fmbfx4mt6pc69j";
 	private static final String PUBLIC_KEY = "cnt5rnqt5zxcmcbf";
 	private static final String PRIVATE_KEY = "e533d5e2074d2bdad3e78fb988e000f6";
-
 	/* ********Braintree Payment Transaction Credentials ************ */
 
 	@Autowired
@@ -58,7 +57,6 @@ public class PaymentService {
 		payment.setTransactionId(transactionId);
 		payment.setOrderId(orderId);
 		paymentRepository.save(payment);
-
 	}
 
 	public String processPayment(BigDecimal totalCost, String paymentMethodNonce) {
