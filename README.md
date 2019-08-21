@@ -2,6 +2,8 @@
 A fully functional full-stack E-commerce web app that allows a user to browse, cart &amp; purchase books.  Tools: Spring (Boot, Hibernate, &amp; Security), Thymeleaf, MySQL, Braintree, jQuery, Bootstrap &amp; Mailtrap.io. Also, [UiPath RPA](https://www.uipath.com/rpa/robotic-process-automation)
 was used to simulate user registration and login.
 
+http://onlinebookstore.us-east-2.elasticbeanstalk.com/
+
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 ### Prerequisites/Requirements
