@@ -84,7 +84,6 @@ public class CustomerAccountController {
 			User user = userService.getCurrentUserByEmail(newEmail);
 			session.setAttribute("user", user);
 		}
-
 		return "account-profile";
 	}
 
